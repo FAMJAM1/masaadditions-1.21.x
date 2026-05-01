@@ -3,15 +3,16 @@
   "id": "masaadditions",
   "version": "${version}",
   "name": "MasaAdditions",
-  "description": "Add-on for Masa's Mods (Tweakeroo, MiniHUD, Litematica)",
+  "description": "Дополнение для модов Masa (Tweakeroo, MiniHUD, Litematica)",
   "authors": [
-    "Red.#9015"
+    "FAMJAM1"
   ],
   "contact": {
-    "homepage": "https://github.com/hp3721/masaadditions",
-    "sources": "https://github.com/hp3721/masaadditions"
+    "homepage": "https://github.com/FAMJAM1/masaadditions-1.21.x",
+    "sources": "https://github.com/FAMJAM1/masaadditions-1.21.x"
   },
   "license": "GPL-3.0",
+  "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -26,7 +27,7 @@
     "masaadditions.litematica_additions.litematica_mixin.json",
     "masaadditions.litematica_additions.mixin.json"
   ],
-  "accessWidener" : "masaadditions.aw",
+  "accessWidener": "masaadditions.aw",
   "depends": {
   },
   "suggests": {
