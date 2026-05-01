@@ -3,7 +3,7 @@
   "id": "masaadditions",
   "version": "${version}",
   "name": "MasaAdditions",
-  "description": "Дополнение для модов Masa (Tweakeroo, MiniHUD, Litematica)",
+  "description": "Unofficial port of MasaAdditions to Minecraft 1.21.1 (Tweakeroo, MiniHUD, Litematica)",
   "authors": [
     "FAMJAM1"
   ],
