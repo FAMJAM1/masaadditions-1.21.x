@@ -52,10 +52,10 @@ dependencies {
 //    modImplementation "curse.maven:malilib-${project.masa_minecraft_version}-303119:${project.malilib_fileid}"
 
     // Masa's Mods updated by sakura-ryoko from JitPack
-    modImplementation "com.github.sakura-ryoko:tweakeroo:${project.tweakeroo_sr}"
-    modImplementation "com.github.sakura-ryoko:minihud:${project.minihud_sr}"
-    modImplementation "com.github.sakura-ryoko:litematica:${project.litematica_sr}"
-    modImplementation "com.github.sakura-ryoko:malilib:${project.malilib_sr}"
+    modImplementation fileTree(dir: "libs", include: ["tweakeroo.jar"])
+    modImplementation fileTree(dir: "libs", include: ["minihud.jar"])
+    modImplementation fileTree(dir: "libs", include: ["litematica.jar"])
+    modImplementation fileTree(dir: "libs", include: ["malilib.jar"])
 
 
     // Fabric API. This is technically optional, but you probably want it anyway.
