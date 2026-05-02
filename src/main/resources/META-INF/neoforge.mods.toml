@@ -1,0 +1,45 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "GPL-3.0"
+
+[[mods]]
+modId = "masaadditions"
+version = "${version}"
+displayName = "MasaAdditions"
+description = "Unofficial port of MasaAdditions to Minecraft 1.21.1 (NeoForge)"
+logoFile = "icon.png"
+
+[[dependencies.masaadditions]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1,)"
+    ordering = "NONE"
+    side = "CLIENT"
+
+[[dependencies.masaadditions]]
+    modId = "mafglib"
+    type = "required"
+    versionRange = "[0.4,)"
+    ordering = "NONE"
+    side = "CLIENT"
+
+[[dependencies.masaadditions]]
+    modId = "forgematica"
+    type = "optional"
+    versionRange = "[0.3,)"
+    ordering = "NONE"
+    side = "CLIENT"
+
+[[dependencies.masaadditions]]
+    modId = "tweakerge"
+    type = "optional"
+    versionRange = "[0.3,)"
+    ordering = "NONE"
+    side = "CLIENT"
+
+[[dependencies.masaadditions]]
+    modId = "bocchud"
+    type = "optional"
+    versionRange = "[0.3,)"
+    ordering = "NONE"
+    side = "CLIENT"

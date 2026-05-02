@@ -1,16 +1,17 @@
 package com.red.masaadditions;
 
-import net.fabricmc.api.ModInitializer;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MasaAdditions implements ModInitializer {
+@Mod(MasaAdditions.MOD_ID)
+public class MasaAdditions {
     public static final String MOD_ID = "masaadditions";
     public static final String MOD_NAME = "MasaAdditions";
     public static final Logger logger = LogManager.getLogger(MOD_ID);
 
-    @Override
-    public void onInitialize() {
+    public MasaAdditions(IEventBus modEventBus) {
         logger.info("MasaAdditions Loaded.");
     }
 }

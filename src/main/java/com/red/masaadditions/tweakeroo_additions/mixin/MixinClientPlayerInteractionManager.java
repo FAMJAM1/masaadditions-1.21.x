@@ -92,7 +92,7 @@ public abstract class MixinClientPlayerInteractionManager {
     private void modifyPlacementPacket(MutableObject<ActionResult> result, ClientPlayerEntity player, Hand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
         if (PlacementTweaks.replacementModeUseStack != null) {
             if (!MinecraftClient.getInstance().isInSingleplayer()) {
-                this.networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getSide()));
+                this.networkHandler.send(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getSide()));
                 cir.setReturnValue(new PlayerInteractBlockC2SPacket(hand, blockHitResult, sequence));
             }
             PlacementTweaks.replacementModeUseStack = null;

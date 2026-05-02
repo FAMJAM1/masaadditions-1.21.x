@@ -18,11 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BlockModelRendererSchematic.class, remap = false)
 public class MixinBlockModelRendererSchematic {
     @Inject(method = "shouldRenderModelSide", at = @At("RETURN"), cancellable = true)
-    private static void shouldRenderModelSide(BlockRenderView worldIn, BlockState stateIn, BlockPos posIn, Direction side, boolean bl, BlockPos mutablePos, CallbackInfoReturnable<Boolean> cir) {
+    private static void shouldRenderModelSide(BlockRenderView worldIn, BlockState stateIn, BlockPos posIn, Direction side, BlockPos mutablePos, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             return;
         }
-
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         ItemStack item = player != null ? player.getMainHandStack() : ItemStack.EMPTY;
         BlockState neighborBlockState = worldIn.getBlockState(mutablePos);

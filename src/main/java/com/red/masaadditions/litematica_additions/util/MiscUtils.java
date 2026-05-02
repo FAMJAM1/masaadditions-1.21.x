@@ -52,7 +52,8 @@ public class MiscUtils {
         } else if (stateSchematic.getBlock() == Blocks.NETHER_PORTAL) {
             match = heldItem == Items.FLINT_AND_STEEL || heldItem == Items.FIRE_CHARGE;
         } else if (stateSchematic.getBlock() instanceof FlowerPotBlock) {
-            match = heldItem == ((MixinFlowerPotBlockAccessor)stateSchematic.getBlock()).getContent().asItem() || heldItem == Items.FLOWER_POT;
+            Block content = ((MixinFlowerPotBlockAccessor) stateSchematic.getBlock()).getContent();
+            match = content != null && heldItem == content.asItem() || heldItem == Items.FLOWER_POT;
         } else if (stateSchematic.getBlock() instanceof Waterloggable && stateSchematic.get(Properties.WATERLOGGED)) {
             match = heldItem == Items.WATER_BUCKET;
         }
