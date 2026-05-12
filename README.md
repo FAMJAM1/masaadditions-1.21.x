@@ -19,7 +19,7 @@ This port supports **Minecraft 1.21.x** on both Fabric and NeoForge:
 | Branch | Loader | Minecraft |
 |--------|--------|-----------|
 | [`masaadditions-1.21.11`](https://github.com/FAMJAM1/masaadditions-1.21.x/tree/masaadditions-1.21.1) | Fabric | 1.21.11 |
-| [`masaaditions-1.21.1`](https://github.com/FAMJAM1/masaadditions-1.21.x/tree/neoforge-1.21.1) | NeoForge | 1.21.1 |
+| [`masaadditions-1.21.1`](https://github.com/FAMJAM1/masaadditions-1.21.x/tree/neoforge-1.21.1) | NeoForge | 1.21.1 |
 
 ---
 
