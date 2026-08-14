@@ -14,7 +14,9 @@ import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(BlockItem.class)
 public class MixinBlockItem {
-    @ModifyVariable(method = "place(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;", ordinal = 1, at = @At(value = "STORE", ordinal = 0), slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/BlockItem;getPlacementState(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;")))
+    // The context is stored before the placement state is worked out now, so the
+    // slice starts at the call that produces it
+    @ModifyVariable(method = "place(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;", ordinal = 1, at = @At(value = "STORE", ordinal = 0), slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/BlockItem;updatePlacementContext(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/item/context/BlockPlaceContext;")))
     private BlockPlaceContext modifyPlacementContext(BlockPlaceContext context) {
         boolean useReplacementMode = HotkeysExtended.REPLACEMENT_MODE.getKeybind().isKeybindHeld()
             && tweakermore_areWeThePlayer(context)

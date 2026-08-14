@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(BlockPlaceContext.class)
 public interface MixinItemPlacementContextAccessor {
-    @Accessor
+    // Named outright: the field is replaceClicked, not the method's own name
+    @Accessor("replaceClicked")
     void setCanReplaceExisting(boolean canReplaceExisting);
 }
