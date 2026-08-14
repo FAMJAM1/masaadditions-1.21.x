@@ -1,37 +1,34 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
-import net.minecraft.core.BlockPos;
+import com.red.masaadditions.tweakeroo_additions.util.RainbowLeavesTint;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.awt.Color;
+import java.util.List;
 
-// Foliage now carries its own tint source that overrides the shared one, so the
-// colour is taken over where the renderer asks for it instead.
-@Mixin(ModelBlockRenderer.class)
+// Colouring is a source per block now, and foliage brings its own, so overriding
+// the shared one reaches nothing. This swaps the source itself: it is where the
+// game and any renderer replacing it both come to ask, so one hook covers both.
+@Mixin(BlockColors.class)
 public class MixinBlockColors {
-    // From UsefulMod by nessie
-    @Inject(method = "computeTintColor(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;I)I", at = @At("HEAD"), cancellable = true)
-    private void getColor(BlockAndTintGetter world, BlockState state, BlockPos pos, int tintIndex, CallbackInfoReturnable<Integer> cir) {
-        if (!FeatureToggleExtended.TWEAK_RAINBOW_LEAVES.getBooleanValue() || pos == null || !(state.getBlock() instanceof LeavesBlock)) {
+    @Inject(method = "getTintSources", at = @At("RETURN"), cancellable = true)
+    private void getColor(BlockState state, CallbackInfoReturnable<List<BlockTintSource>> cir) {
+        if (!FeatureToggleExtended.TWEAK_RAINBOW_LEAVES.getBooleanValue() || !(state.getBlock() instanceof LeavesBlock)) {
             return;
         }
 
-        final int sc = 1024;
-        final float hue = this.dist(pos.getX(), 32 * pos.getY(), pos.getX() + pos.getZ()) % sc / sc;
-        cir.setReturnValue(Color.HSBtoRGB(hue, 0.7F, 1F));
-    }
+        List<BlockTintSource> sources = cir.getReturnValue();
+        if (sources == null || sources.isEmpty()) {
+            return;
+        }
 
-    @Unique
-    private float dist(int x, int y, int z) {
-        return (float) Math.sqrt(x * x + y * y + z * z);
+        cir.setReturnValue(sources.stream().map(source -> (BlockTintSource) new RainbowLeavesTint(source)).toList());
     }
 }
