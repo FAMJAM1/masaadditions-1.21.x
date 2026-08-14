@@ -4,12 +4,17 @@ import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+// The renderer decides the festive texture once, up front, instead of passing a
+// flag down to the texture lookup, so the answer is overridden at the source.
 @Mixin(ChestRenderer.class)
 public class MixinChestBlockEntityRenderer {
-    @ModifyArg(method = "render(Lnet/minecraft/world/level/block/entity/BlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/TexturedRenderLayers;getChestTextureId(Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/block/enums/ChestType;Z)Lnet/minecraft/client/util/SpriteIdentifier;"), index = 2)
-    private boolean getChestTexture(boolean christmas) {
-        return !ConfigsExtended.Disable.DISABLE_CHRISTMAS_CHESTS.getBooleanValue() && christmas;
+    @Inject(method = "xmasTextures", at = @At("HEAD"), cancellable = true)
+    private static void getChestTexture(CallbackInfoReturnable<Boolean> cir) {
+        if (ConfigsExtended.Disable.DISABLE_CHRISTMAS_CHESTS.getBooleanValue()) {
+            cir.setReturnValue(false);
+        }
     }
 }

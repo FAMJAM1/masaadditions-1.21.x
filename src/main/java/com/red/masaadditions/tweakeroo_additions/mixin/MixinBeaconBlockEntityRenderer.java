@@ -7,11 +7,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+// Renderers hand their state to a collector now rather than drawing, so skipping
+// the extraction is what leaves the beam undrawn.
 @Mixin(BeaconRenderer.class)
 public abstract class MixinBeaconBlockEntityRenderer {
-    @Inject(method = "render(Lnet/minecraft/block/entity/BeaconBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
     private void render(CallbackInfo ci) {
-        if (ConfigsExtended.Disable.DISABLE_BEACON_BEAM_RENDERING.getBooleanValue())
+        if (ConfigsExtended.Disable.DISABLE_BEACON_BEAM_RENDERING.getBooleanValue()) {
             ci.cancel();
+        }
     }
 }
