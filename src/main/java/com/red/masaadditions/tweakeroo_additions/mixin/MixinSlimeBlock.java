@@ -1,6 +1,7 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SlimeBlock;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -16,20 +17,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SlimeBlock.class)
 public class MixinSlimeBlock extends HalfTransparentBlock {
-    protected MixinSlimeBlock(Settings settings) {
+    protected MixinSlimeBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
-    @Inject(method = "onEntityLand", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "updateEntityMovementAfterFallOn", at = @At("HEAD"), cancellable = true)
     private void onEntityLand(BlockGetter world, Entity entity, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SLIME_BLOCK_BOUNCING.getBooleanValue() && entity instanceof Player) {
-            super.updateEntityAfterFallOn(world, entity);
+            super.updateEntityMovementAfterFallOn(world, entity);
             ci.cancel();
         }
     }
 
-    @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;handleFallDamage(FFLnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)
-    private void handleFallDamage(Level world, BlockState state, BlockPos pos, Entity entity, float distance, CallbackInfo ci) {
+    @Inject(method = "fallOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;causeFallDamage(DFLnet/minecraft/world/damagesource/DamageSource;)Z"), cancellable = true)
+    private void handleFallDamage(Level world, BlockState state, BlockPos pos, Entity entity, double distance, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SLIME_BLOCK_BOUNCING.getBooleanValue() && entity instanceof Player) {
             super.fallOn(world, state, pos, entity, distance);
             ci.cancel();

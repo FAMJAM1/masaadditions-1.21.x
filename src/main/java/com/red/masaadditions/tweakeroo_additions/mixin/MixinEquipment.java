@@ -21,7 +21,7 @@ public interface MixinEquipment {
     private void use(Item item, Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResult<ItemStack>> cir, ItemStack itemStack) {
         Minecraft mc = Minecraft.getInstance();
 
-        if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isSneaking() || hand != InteractionHand.MAIN_HAND || mc.gameMode == null || user.containerMenu != user.inventoryMenu) {
+        if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isShiftKeyDown() || hand != InteractionHand.MAIN_HAND || mc.gameMode == null || user.containerMenu != user.inventoryMenu) {
             return;
         }
 

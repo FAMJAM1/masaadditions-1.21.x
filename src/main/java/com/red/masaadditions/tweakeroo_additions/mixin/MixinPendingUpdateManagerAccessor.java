@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(BlockStatePredictionHandler.class)
 public interface MixinPendingUpdateManagerAccessor {
     @Accessor
-    Long2ObjectOpenHashMap<BlockStatePredictionHandler.PendingUpdate> getBlockPosToPendingUpdate();
+    Long2ObjectOpenHashMap<BlockStatePredictionHandler.ServerVerifiedState> getBlockPosToPendingUpdate();
 }

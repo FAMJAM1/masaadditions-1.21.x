@@ -12,10 +12,11 @@ import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBooleanConfigWithMessage;
 import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
 import fi.dy.masa.malilib.util.InfoUtils;
 import fi.dy.masa.malilib.util.StringUtils;
-import fi.dy.masa.tweakeroo.util.RayTraceUtils;
+import fi.dy.masa.malilib.util.game.RayTraceUtils;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.core.Direction;
@@ -42,7 +43,8 @@ public class Callbacks {
         private void blinkDriveTeleport(boolean maintainY) {
             if (this.mc.player.isCreative()) {
                 Entity entity = fi.dy.masa.malilib.util.EntityUtils.getCameraEntity();
-                HitResult trace = RayTraceUtils.getRayTraceFromEntity(this.mc.level, entity, true, this.mc.options.getEffectiveRenderDistance() * 16 + 200);
+                // The old boolean "use liquids" is a ClipContext.Fluid now; ANY keeps liquids solid to the trace
+                HitResult trace = RayTraceUtils.getRayTraceFromEntity(this.mc.level, entity, ClipContext.Fluid.ANY, true, this.mc.options.getEffectiveRenderDistance() * 16 + 200);
 
                 if (trace.getType() != HitResult.Type.MISS) {
                     Vec3 pos = trace.getLocation();

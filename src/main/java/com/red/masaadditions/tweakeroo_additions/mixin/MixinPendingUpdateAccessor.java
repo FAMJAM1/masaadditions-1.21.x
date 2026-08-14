@@ -4,7 +4,7 @@ import net.minecraft.client.multiplayer.prediction.BlockStatePredictionHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(BlockStatePredictionHandler.PendingUpdate.class)
+@Mixin(BlockStatePredictionHandler.ServerVerifiedState.class)
 public interface MixinPendingUpdateAccessor {
     @Accessor
     int getSequence();

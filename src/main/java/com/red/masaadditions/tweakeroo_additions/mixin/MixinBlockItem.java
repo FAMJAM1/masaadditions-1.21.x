@@ -18,11 +18,11 @@ public class MixinBlockItem {
     private BlockPlaceContext modifyPlacementContext(BlockPlaceContext context) {
         boolean useReplacementMode = HotkeysExtended.REPLACEMENT_MODE.getKeybind().isKeybindHeld()
             && tweakermore_areWeThePlayer(context)
-            && !context.canReplaceExisting();
+            && !context.replacingClickedOnBlock();
         if (useReplacementMode) {
             ((MixinItemPlacementContextAccessor) context).setCanReplaceExisting(true);
             if (context.getPlayer() == Minecraft.getInstance().player) {
-                PlacementTweaks.replacementModeUseStack = context.getStack();
+                PlacementTweaks.replacementModeUseStack = context.getItemInHand();
             }
         }
         return context;
@@ -35,6 +35,6 @@ public class MixinBlockItem {
             return false;
         }
         // something that works for both the client player and the server version of the client player
-        return player.getUuid().equals(Minecraft.getInstance().player.getUuid());
+        return player.getUUID().equals(Minecraft.getInstance().player.getUUID());
     }
 }
