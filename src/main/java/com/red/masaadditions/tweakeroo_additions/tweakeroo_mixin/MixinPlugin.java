@@ -1,7 +1,7 @@
 package com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin;
 
 import com.red.masaadditions.MasaAdditions;
-import net.neoforged.fml.loading.LoadingModList;
+import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -10,23 +10,22 @@ import java.util.List;
 import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
-    private static boolean hasTweakerge() {
-        var list = LoadingModList.get();
-        return list != null && list.getModFileById("tweakerge") != null;
+    private static boolean hasTweakeroo() {
+        return FabricLoader.getInstance().isModLoaded("tweakeroo");
     }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.endsWith(".MixinExplosionCarpet")) {
-        var list = LoadingModList.get();
-            return list != null && list.getModFileById("carpet") != null;
+            return FabricLoader.getInstance().isModLoaded("carpet");
         }
-        return hasTweakerge();
+
+        return hasTweakeroo();
     }
 
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-        if (hasTweakerge()) MasaAdditions.logger.info("TweakerooAdditions Loaded.");
+        if (hasTweakeroo()) MasaAdditions.logger.info("TweakerooAdditions Loaded.");
     }
 
     @Override public void onLoad(String mixinPackage) {}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "masaadditions",
+  "version": "${version}",
+  "name": "MasaAdditions",
+  "description": "Unofficial Fabric port of MasaAdditions, an add-on for masa's Tweakeroo, MiniHUD and Litematica.",
+  "authors": [
+    "FAMJAM"
+  ],
+  "contributors": [
+    "hp3721"
+  ],
+  "contact": {
+    "homepage": "https://github.com/FAMJAM1/masaadditions-port",
+    "sources": "https://github.com/FAMJAM1/masaadditions-port",
+    "issues": "https://github.com/FAMJAM1/masaadditions-port/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "masaadditions-icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.red.masaadditions.MasaAdditions"
+    ]
+  },
+  "mixins": [
+    "masaadditions.tweakeroo_additions.tweakeroo_mixin.json",
+    "masaadditions.tweakeroo_additions.mixin.json",
+    "masaadditions.minihud_additions.minihud_mixin.json",
+    "masaadditions.minihud_additions.mixin.json",
+    "masaadditions.litematica_additions.litematica_mixin.json",
+    "masaadditions.litematica_additions.mixin.json"
+  ],
+  "accessWidener": "masaadditions.accesswidener",
+  "depends": {
+    "minecraft": "~26.1",
+    "malilib": ">=0.28.8- <0.29.0-"
+  },
+  "suggests": {
+    "tweakeroo": ">=0.28.6",
+    "litematica": ">=0.27.10",
+    "minihud": ">=0.39.8"
+  },
+  "breaks": {
+    "tweakeroo": "<0.28.6",
+    "litematica": "<0.27.10",
+    "minihud": "<0.39.8"
+  }
+}

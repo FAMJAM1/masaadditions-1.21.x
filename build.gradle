@@ -1,6 +1,6 @@
 plugins {
-    // no-remap: from 26.1 on, masa's NeoForge ports are compiled straight against
-    // Mojang names, so there is nothing left to remap
+    // no-remap: from 26.1 on the game ships unobfuscated and masa's mods are
+    // compiled straight against Mojang names, so there is nothing left to remap
     id 'dev.architectury.loom-no-remap' version '1.17.491'
     id 'maven-publish'
 }
@@ -15,11 +15,9 @@ base {
 
 loom {
     accessWidenerPath = file("src/main/resources/masaadditions.accesswidener")
-    neoForge {}
 }
 
 repositories {
-    maven { url = "https://maven.neoforged.net/releases" }
     maven { url = "https://maven.fabricmc.net/" }
     maven { url = "https://maven.architectury.dev/" }
     maven { url = 'https://api.modrinth.com/maven' }
@@ -28,25 +26,27 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    // No mappings: the game ships unobfuscated from 26.1 on
-    neoForge "net.neoforged:neoforge:${project.neoforge_version}"
+    // No mappings: the game ships unobfuscated from 26.1 on. loom-no-remap does
+    // not register the mod* configurations either, so these are plain ones.
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // The mods this one extends. Compile only: the player installs them separately.
-    compileOnly "maven.modrinth:mafglib:${project.mafglib_version}"
-    compileOnly "maven.modrinth:forgematica:${project.forgematica_version}"
-    compileOnly "maven.modrinth:tweakerge:${project.tweakerge_version}"
-    compileOnly "maven.modrinth:bocchud:${project.bocchud_version}"
+    compileOnly "maven.modrinth:malilib:${project.malilib_version}"
+    compileOnly "maven.modrinth:litematica:${project.litematica_version}"
+    compileOnly "maven.modrinth:tweakeroo:${project.tweakeroo_version}"
+    compileOnly "maven.modrinth:minihud:${project.minihud_version}"
 
-    runtimeOnly "maven.modrinth:mafglib:${project.mafglib_version}"
-    runtimeOnly "maven.modrinth:forgematica:${project.forgematica_version}"
-    runtimeOnly "maven.modrinth:tweakerge:${project.tweakerge_version}"
-    runtimeOnly "maven.modrinth:bocchud:${project.bocchud_version}"
-    runtimeOnly "maven.modrinth:foxifiedclasstweaker:${project.foxified_classtweaker_version}"
+    runtimeOnly "maven.modrinth:malilib:${project.malilib_version}"
+    runtimeOnly "maven.modrinth:litematica:${project.litematica_version}"
+    runtimeOnly "maven.modrinth:tweakeroo:${project.tweakeroo_version}"
+    runtimeOnly "maven.modrinth:minihud:${project.minihud_version}"
+    // malilib needs the networking and resource loader modules
+    runtimeOnly "maven.modrinth:fabric-api:${project.fabric_api_version}"
 }
 
 processResources {
     inputs.property "version", project.version
-    filesMatching("META-INF/neoforge.mods.toml") {
+    filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
 }

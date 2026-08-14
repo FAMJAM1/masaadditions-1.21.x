@@ -1,7 +1,7 @@
 package com.red.masaadditions.litematica_additions.litematica_mixin;
 
 import com.red.masaadditions.MasaAdditions;
-import net.neoforged.fml.loading.LoadingModList;
+import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -10,19 +10,18 @@ import java.util.List;
 import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
-    private static boolean hasForgematica() {
-        var list = LoadingModList.get();
-        return list != null && list.getModFileById("forgematica") != null;
+    private static boolean hasLitematica() {
+        return FabricLoader.getInstance().isModLoaded("litematica");
     }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return hasForgematica();
+        return hasLitematica();
     }
 
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-        if (hasForgematica()) MasaAdditions.logger.info("LitematicaAdditions Loaded.");
+        if (hasLitematica()) MasaAdditions.logger.info("LitematicaAdditions Loaded.");
     }
 
     @Override public void onLoad(String mixinPackage) {}
