@@ -5,15 +5,9 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.Map;
-
 @Mixin(FlowerPotBlock.class)
 public interface MixinFlowerPotBlockAccessor {
-    @Accessor("CONTENT_TO_POTTED")
-    static Map<Block, Block> getContentToPotted() {
-        throw new AssertionError();
-    }
-
-    @Accessor("content")
+    // The flower a pot holds; the field is called potted now
+    @Accessor("potted")
     Block getContent();
 }

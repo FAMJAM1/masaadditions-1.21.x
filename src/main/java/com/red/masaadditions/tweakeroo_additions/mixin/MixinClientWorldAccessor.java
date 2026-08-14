@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ClientLevel.class)
 public interface MixinClientWorldAccessor {
-    @Accessor("pendingUpdateManager")
+    @Accessor("blockStatePredictionHandler")
     BlockStatePredictionHandler tweakermore_getPendingUpdateManager();
 }

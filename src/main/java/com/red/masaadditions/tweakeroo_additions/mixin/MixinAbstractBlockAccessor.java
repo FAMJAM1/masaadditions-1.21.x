@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(BlockBehaviour.class)
 public interface MixinAbstractBlockAccessor {
     @Mutable
-    @Accessor("velocityMultiplier")
+    @Accessor("speedFactor")
     void setVelocityMultiplier(float velocityMultiplier);
 
     @Mutable
-    @Accessor("jumpVelocityMultiplier")
+    @Accessor("jumpFactor")
     void setJumpVelocityMultiplier(float jumpVelocityMultiplier);
 }

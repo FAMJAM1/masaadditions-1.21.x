@@ -27,7 +27,6 @@
     "MixinInGameHud",
     "MixinItemFrameEntityRenderer",
     "MixinItemPlacementContextAccessor",
-    "MixinKeyBindingAccessor",
     "MixinMessageHandler",
     "MixinMinecraftClient",
     "MixinParticleManager",
