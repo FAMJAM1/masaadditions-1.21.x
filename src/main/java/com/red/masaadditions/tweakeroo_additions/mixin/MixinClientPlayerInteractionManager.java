@@ -70,7 +70,7 @@ public abstract class MixinClientPlayerInteractionManager {
         }
     }
 
-    @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;syncSelectedSlot()V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;ensureHasSentCarriedItem()V", shift = At.Shift.AFTER), cancellable = true)
     private void onInteractEntity(Player player, Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (FeatureToggleExtended.TWEAK_NAME_TAG_PIGLINS.getBooleanValue() && player.getItemInHand(hand).getItem() instanceof NameTagItem) {
             if (!(entity instanceof Piglin piglinEntity)) {

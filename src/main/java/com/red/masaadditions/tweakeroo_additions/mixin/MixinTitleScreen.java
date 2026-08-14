@@ -14,7 +14,7 @@ public class MixinTitleScreen extends Screen {
         super(title);
     }
 
-    @ModifyVariable(method = "createNormalMenuOptions", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/TitleScreen;addDrawableChild(Lnet/minecraft/client/gui/Element;)Lnet/minecraft/client/gui/Element;", ordinal = 2), ordinal = 0)
+    @ModifyVariable(method = "createNormalMenuOptions", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/TitleScreen;addRenderableWidget(Lnet/minecraft/client/gui/components/events/GuiEventListener;)Lnet/minecraft/client/gui/components/events/GuiEventListener;", ordinal = 2), ordinal = 0)
     private boolean disableRealmsButton(boolean bl) {
         return !ConfigsExtended.Disable.DISABLE_REALMS_BUTTON.getBooleanValue() && bl;
     }

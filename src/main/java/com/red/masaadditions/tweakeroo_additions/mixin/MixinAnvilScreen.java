@@ -20,7 +20,7 @@ public abstract class MixinAnvilScreen extends ItemCombinerScreen<AnvilMenu> {
         super(handler, playerInventory, title, texture);
     }
 
-    @Redirect(method = "slotChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/EditBox;setText(Ljava/lang/String;)V"))
+    @Redirect(method = "slotChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/EditBox;setValue(Ljava/lang/String;)V"))
     private void setText(EditBox nameField, String text) {
         Slot slot = this.menu.getSlot(0);
         if (FeatureToggleExtended.TWEAK_ITEM_NAME_COPY.getBooleanValue() && slot != null && slot.hasItem())
