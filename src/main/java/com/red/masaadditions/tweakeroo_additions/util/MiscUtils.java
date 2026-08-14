@@ -52,7 +52,7 @@ public class MiscUtils {
                 double speedY = (0.5 - rand.nextDouble());
                 double speedZ = (0.5 - rand.nextDouble());
 
-                manager.addParticle((new BlockDustParticleExt(world, x, y, z, speedX, speedY, speedZ, state, pos))
+                manager.add((new BlockDustParticleExt(world, x, y, z, speedX, speedY, speedZ, state, pos))
                         .setPower((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SPEED.getDoubleValue())
                         .scale((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SCALE.getDoubleValue()));
             }

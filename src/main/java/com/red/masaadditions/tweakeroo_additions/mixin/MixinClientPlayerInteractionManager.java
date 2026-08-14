@@ -14,8 +14,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.NameTagItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
@@ -33,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.stream.StreamSupport;
+import java.util.stream.Stream;
 
 @Mixin(MultiPlayerGameMode.class)
 public abstract class MixinClientPlayerInteractionManager {
@@ -77,7 +78,8 @@ public abstract class MixinClientPlayerInteractionManager {
                 return;
             }
 
-            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getHandSlots().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
+            // Swords are a tag rather than a class now, and hands are read slot by slot
+            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || Stream.of(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND).map(piglinEntity::getItemBySlot).noneMatch(itemStack -> itemStack.is(ItemTags.SWORDS))) {
                 cir.setReturnValue(InteractionResult.PASS);
             }
         }
