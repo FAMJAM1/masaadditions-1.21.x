@@ -26,6 +26,9 @@ public class MixinBlockColors {
 
         List<BlockTintSource> sources = cir.getReturnValue();
         if (sources == null || sources.isEmpty()) {
+            // Cherry and pale oak are registered with no source at all, but their
+            // model still asks for a tint, so one is handed to them here
+            cir.setReturnValue(List.of(new RainbowLeavesTint(null)));
             return;
         }
 
