@@ -1,7 +1,7 @@
 package com.red.masaadditions.litematica_additions.litematica_mixin;
 
 import com.red.masaadditions.MasaAdditions;
-import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -11,8 +11,7 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     private static boolean hasForgematica() {
-        var loader = FMLLoader.getCurrentOrNull();
-        var list = loader != null ? loader.getLoadingModList() : null;
+        var list = LoadingModList.get();
         return list != null && list.getModFileById("forgematica") != null;
     }
 

@@ -1,7 +1,7 @@
 package com.red.masaadditions.tweakeroo_additions.tweakeroo_mixin;
 
 import com.red.masaadditions.MasaAdditions;
-import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -11,16 +11,14 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     private static boolean hasTweakerge() {
-        var loader = FMLLoader.getCurrentOrNull();
-        var list = loader != null ? loader.getLoadingModList() : null;
+        var list = LoadingModList.get();
         return list != null && list.getModFileById("tweakerge") != null;
     }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.endsWith(".MixinExplosionCarpet")) {
-            var loader = FMLLoader.getCurrentOrNull();
-        var list = loader != null ? loader.getLoadingModList() : null;
+        var list = LoadingModList.get();
             return list != null && list.getModFileById("carpet") != null;
         }
         return hasTweakerge();

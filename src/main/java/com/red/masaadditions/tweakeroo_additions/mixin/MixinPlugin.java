@@ -1,6 +1,6 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
-import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -11,8 +11,7 @@ import java.util.Set;
 public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        var loader = FMLLoader.getCurrentOrNull();
-        var list = loader != null ? loader.getLoadingModList() : null;
+        var list = LoadingModList.get();
         return list != null && list.getModFileById("tweakerge") != null;
     }
 
