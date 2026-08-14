@@ -62,11 +62,11 @@ public class MiscUtils {
     }
 
     public static boolean handleUseDragonEgg(Block block, LocalPlayer player) {
-        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isSneaking();
+        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isShiftKeyDown();
     }
 
     public static boolean handleUseBed(Block block, ClientLevel world) {
-        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.getDimension().bedWorks();
+        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.dimensionType().bedWorks();
     }
 
     public static boolean handleUseTools(Block block, Item heldItem) {

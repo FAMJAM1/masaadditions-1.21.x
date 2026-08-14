@@ -27,7 +27,7 @@ public class InventoryTweaks {
             if (id == null) {
                 continue;
             }
-            BuiltInRegistries.ITEM.getOrEmpty(id).ifPresent(set::add);
+            BuiltInRegistries.ITEM.getOptional(id).ifPresent(set::add);
         }
     }
 

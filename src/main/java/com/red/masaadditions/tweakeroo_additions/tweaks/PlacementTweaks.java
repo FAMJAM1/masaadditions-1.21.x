@@ -24,7 +24,7 @@ public class PlacementTweaks {
 
     public static boolean onProcessLeftClickBlock(BlockPos pos) {
         Player player = Minecraft.getInstance().player;
-        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.getCommandSenderWorld().getBlockState(pos).getBlock() instanceof DragonEggBlock;
+        return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.level().getBlockState(pos).getBlock() instanceof DragonEggBlock;
     }
 
     public static boolean isPositionDisallowedByPerimeterOutlineList(BlockPos pos) {
@@ -34,7 +34,7 @@ public class PlacementTweaks {
             return false;
 
         ClientLevel level = Minecraft.getInstance().level;
-        return world != null && PERIMETER_OUTLINE_BLOCKS.contains(world.getBlockState(world.getTopPosition(Heightmap.Type.WORLD_SURFACE, pos).down()).getBlock());
+        return level != null && PERIMETER_OUTLINE_BLOCKS.contains(level.getBlockState(level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, pos).below()).getBlock());
     }
 
     public static void setPerimeterOutlineBlocks(List<String> blocks) {
@@ -51,8 +51,8 @@ public class PlacementTweaks {
     @Nullable
     private static Block getBlockFromName(String name) {
         try {
-            Identifier identifier = Identifier.of(name);
-            return BuiltInRegistries.BLOCK.getOrEmpty(identifier).orElse(null);
+            Identifier identifier = Identifier.parse(name);
+            return BuiltInRegistries.BLOCK.getOptional(identifier).orElse(null);
         } catch (Exception e) {
             return null;
         }
