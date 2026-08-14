@@ -40,7 +40,7 @@ import java.util.stream.Stream;
 public abstract class MixinClientPlayerInteractionManager {
     @Shadow
     @Final
-    private ClientPacketListener networkHandler;
+    private ClientPacketListener connection;
 
     @Inject(method = "startDestroyBlock", at = @At("HEAD"), cancellable = true)
     private void handleBreakingRestriction1(BlockPos pos, Direction side, CallbackInfoReturnable<Boolean> cir) {
@@ -94,7 +94,7 @@ public abstract class MixinClientPlayerInteractionManager {
     private void modifyPlacementPacket(MutableObject<InteractionResult> result, LocalPlayer player, InteractionHand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
         if (PlacementTweaks.replacementModeUseStack != null) {
             if (!Minecraft.getInstance().isLocalServer()) {
-                this.networkHandler.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getDirection()));
+                this.connection.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getDirection()));
                 cir.setReturnValue(new ServerboundUseItemOnPacket(hand, blockHitResult, sequence));
             }
             PlacementTweaks.replacementModeUseStack = null;

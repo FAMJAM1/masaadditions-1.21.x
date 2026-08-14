@@ -13,14 +13,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RecipeBookComponent.class)
 public abstract class MixinRecipeBookWidget {
-    @Shadow
-    protected Minecraft client;
-
     // From UsefulMod by nessie
     @Inject(method = "updateStackedContents", at = @At("RETURN"))
     private void refreshInputs(CallbackInfo ci) {
-        if (ConfigsExtended.Generic.CLICK_RECIPE_CRAFT.getBooleanValue() && GuiBase.isCtrlDown() && GuiBase.isShiftDown()) {
-            client.gameMode.handleContainerInput(client.player.containerMenu.containerId, 0, 1, GuiBase.isAltDown() ? ContainerInput.THROW : ContainerInput.QUICK_MOVE, client.player);
+        if (!ConfigsExtended.Generic.CLICK_RECIPE_CRAFT.getBooleanValue() || !GuiBase.isCtrlDown() || !GuiBase.isShiftDown()) {
+            return;
+        }
+
+        // The widget no longer holds a client reference of its own
+        Minecraft client = Minecraft.getInstance();
+
+        if (client.gameMode != null && client.player != null) {
+            client.gameMode.handleContainerInput(client.player.containerMenu.containerId, 0, 1,
+                    GuiBase.isAltDown() ? ContainerInput.THROW : ContainerInput.QUICK_MOVE, client.player);
         }
     }
 }

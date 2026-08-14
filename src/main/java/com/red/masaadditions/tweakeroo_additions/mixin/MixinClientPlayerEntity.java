@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LocalPlayer.class)
 public abstract class MixinClientPlayerEntity extends AbstractClientPlayer {
     @Shadow
-    public abstract boolean isSubmergedInWater();
+    public abstract boolean isUnderWater();
 
     public MixinClientPlayerEntity(ClientLevel world, GameProfile profile) {
         super(world, profile);
@@ -22,7 +22,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayer {
 
     @Inject(method = "canStartSprinting", at = @At("HEAD"), cancellable = true)
     private void setSprinting(CallbackInfoReturnable<Boolean> cir) {
-        if (ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue() && ((this.isInWater() && !this.isSubmergedInWater()) || (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue()))) {
+        if (ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue() && ((this.isInWater() && !this.isUnderWater()) || (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue()))) {
             cir.setReturnValue(false);
         }
     }
