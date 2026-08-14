@@ -85,12 +85,12 @@ public abstract class MixinClientPlayerInteractionManager {
         }
     }
 
-    @Inject(method = "method_41933", at = @At("HEAD"))
+    @Inject(method = "lambda$useItemOn$0", at = @At("HEAD"))
     private void resetReplacementModeFlag(CallbackInfoReturnable<Packet<?>> cir) {
         PlacementTweaks.replacementModeUseStack = null;
     }
 
-    @Inject(method = "method_41933", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "lambda$useItemOn$0", at = @At("RETURN"), cancellable = true)
     private void modifyPlacementPacket(MutableObject<InteractionResult> result, LocalPlayer player, InteractionHand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
         if (PlacementTweaks.replacementModeUseStack != null) {
             if (!Minecraft.getInstance().isLocalServer()) {
