@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // the state is built and the renderer's own invisibility path skips it.
 @Mixin(AvatarRenderer.class)
 public class MixinPlayerEntityRenderer {
-    @Inject(method = "extractRenderState", at = @At("RETURN"))
+    @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("RETURN"))
     private void render(Entity entity, AvatarRenderState state, float partialTick, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_OTHER_PLAYER_RENDERING.getBooleanValue()
                 && entity != Minecraft.getInstance().player) {

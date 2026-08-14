@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 // empty hides the border and leaves the contents alone.
 @Mixin(value = ItemFrameRenderer.class)
 public class MixinItemFrameEntityRenderer {
-    @Redirect(method = "submit", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockModelRenderState;isEmpty()Z"))
+    @Redirect(method = "submit(Lnet/minecraft/client/renderer/entity/state/ItemFrameRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/BlockModelRenderState;isEmpty()Z"))
     private boolean disableItemFrameFrameRendering(BlockModelRenderState frameModel, ItemFrameRenderState state,
                                                    PoseStack poseStack, SubmitNodeCollector collector,
                                                    CameraRenderState cameraState) {

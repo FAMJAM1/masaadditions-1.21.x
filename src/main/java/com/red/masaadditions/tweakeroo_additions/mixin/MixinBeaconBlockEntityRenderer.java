@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // the extraction is what leaves the beam undrawn.
 @Mixin(BeaconRenderer.class)
 public abstract class MixinBeaconBlockEntityRenderer {
-    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "extractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/client/renderer/blockentity/state/BeaconRenderState;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V", at = @At("HEAD"), cancellable = true)
     private void render(CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_BEACON_BEAM_RENDERING.getBooleanValue()) {
             ci.cancel();

@@ -25,7 +25,8 @@ public class MixinClientWorld {
 
     // The particles thrown off a block while it is being hit; the level spawns
     // them itself now instead of asking the particle engine.
-    @Inject(method = "addBreakingBlockEffect", at = @At("HEAD"), cancellable = true)
+    // Named in full: the two-argument overload just forwards to this one
+    @Inject(method = "addBreakingBlockEffect(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/phys/HitResult;)V", at = @At("HEAD"), cancellable = true)
     private void onAddBlockDestroyEffects2(BlockPos pos, Direction direction, HitResult hitResult, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_BLOCK_ATTACKED_PARTICLES.getBooleanValue()) {
             ci.cancel();
