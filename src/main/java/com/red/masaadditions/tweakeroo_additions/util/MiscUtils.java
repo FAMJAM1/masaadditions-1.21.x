@@ -15,6 +15,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.attribute.BedRule;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 
 import java.util.ArrayList;
 
@@ -51,22 +53,28 @@ public class MiscUtils {
                 double speedZ = (0.5 - rand.nextDouble());
 
                 manager.addParticle((new BlockDustParticleExt(world, x, y, z, speedX, speedY, speedZ, state, pos))
-                        .move((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SPEED.getDoubleValue())
+                        .setPower((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SPEED.getDoubleValue())
                         .scale((float) ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_SCALE.getDoubleValue()));
             }
         }
     }
 
     public static boolean handleUseSnowLayer(Block block, LocalPlayer player) {
-        return ConfigsExtended.Disable.DISABLE_SNOW_LAYER_STACKING.getBooleanValue() && block instanceof SnowBlock;
+        return ConfigsExtended.Disable.DISABLE_SNOW_LAYER_STACKING.getBooleanValue() && block instanceof SnowLayerBlock;
     }
 
     public static boolean handleUseDragonEgg(Block block, LocalPlayer player) {
         return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isShiftKeyDown();
     }
 
-    public static boolean handleUseBed(Block block, ClientLevel world) {
-        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.dimensionType().bedWorks();
+    // Whether a bed blows up is an environment attribute now, read per position
+    public static boolean handleUseBed(Block block, ClientLevel world, BlockPos pos) {
+        if (!ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() || !(block instanceof BedBlock)) {
+            return false;
+        }
+
+        BedRule rule = world.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos);
+        return rule != null && rule.explodes();
     }
 
     public static boolean handleUseTools(Block block, Item heldItem) {

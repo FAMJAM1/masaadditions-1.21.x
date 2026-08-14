@@ -43,6 +43,7 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
     private final boolean defaultValueBoolean;
     private final boolean singlePlayer;
     private boolean valueBoolean;
+    private boolean lastSavedValueBoolean;
     private IValueChangeCallback<IConfigBoolean> callback;
 
     FeatureToggleExtended(String name, boolean defaultValue, String defaultHotkey) {
@@ -241,6 +242,30 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
 
         if (oldValue != this.valueBoolean) {
             this.onValueChanged();
+        }
+    }
+
+    // malilib tracks unsaved changes itself now, so every config has to answer for its own
+    @Override
+    public boolean isDirty() {
+        return this.lastSavedValueBoolean != this.valueBoolean;
+    }
+
+    @Override
+    public void markDirty() {
+        this.lastSavedValueBoolean = !this.valueBoolean;
+    }
+
+    @Override
+    public void markClean() {
+        this.lastSavedValueBoolean = this.valueBoolean;
+    }
+
+    @Override
+    public void checkIfClean() {
+        if (this.isDirty()) {
+            this.onValueChanged();
+            this.markClean();
         }
     }
 
