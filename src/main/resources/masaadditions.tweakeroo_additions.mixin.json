@@ -10,7 +10,6 @@
     "MixinAbstractBlockState",
     "MixinAbstractHorseEntity",
     "MixinAnvilScreen",
-    "MixinBeaconBlockEntityRenderer",
     "MixinBlockColors",
     "MixinBlockDustParticle",
     "MixinBlockItem",
