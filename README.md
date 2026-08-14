@@ -127,4 +127,4 @@ Output: `build/libs/`. IntelliJ IDEA recommended.
 - [Original mod (archived)](https://github.com/hp3721/masaadditions)
 - [Masa's Mods](https://masa.dy.fi/mcmods/)
 - [Modrinth page](https://modrinth.com/mod/masaadditions-port)
-- [Report a Bug](https://github.com/FAMJAM1/masaadditions-1.21.x/issues)
+- [Report a Bug](https://github.com/FAMJAM1/masaadditions-port/issues)
