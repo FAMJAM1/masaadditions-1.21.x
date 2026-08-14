@@ -11,7 +11,8 @@ import fi.dy.masa.malilib.interfaces.ICompletionListener;
 import fi.dy.masa.malilib.util.GuiUtils;
 import fi.dy.masa.malilib.util.StringUtils;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class GuiFileImport extends GuiFileImportBase implements ICompletionListener {
     public GuiFileImport(LitematicaSchematic schematic) {
@@ -26,7 +27,7 @@ public class GuiFileImport extends GuiFileImportBase implements ICompletionListe
     }
 
     @Override
-    public File getDefaultDirectory() {
+    public Path getDefaultDirectory() {
         return DataManager.getSchematicsBaseDirectory();
     }
 
@@ -63,11 +64,11 @@ public class GuiFileImport extends GuiFileImportBase implements ICompletionListe
         @Override
         public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
             if (this.type == GuiSchematicSaveBase.ButtonType.SAVE) {
-                File dir = this.gui.getListWidget().getCurrentDirectory();
+                Path dir = this.gui.getListWidget().getCurrentDirectory();
                 String fileName = this.gui.getTextFieldText();
 
-                if (!dir.isDirectory()) {
-                    this.gui.addMessage(Message.MessageType.ERROR, "litematica.error.schematic_save.invalid_directory", dir.getAbsolutePath());
+                if (!Files.isDirectory(dir)) {
+                    this.gui.addMessage(Message.MessageType.ERROR, "litematica.error.schematic_save.invalid_directory", dir.toAbsolutePath().toString());
                     return;
                 }
 

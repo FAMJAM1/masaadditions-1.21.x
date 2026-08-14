@@ -23,7 +23,7 @@ public class MixinBlockModelRendererSchematic {
             return;
         }
         LocalPlayer player = Minecraft.getInstance().player;
-        ItemStack item = player != null ? player.getMainHandStack() : ItemStack.EMPTY;
+        ItemStack item = player != null ? player.getMainHandItem() : ItemStack.EMPTY;
         BlockState neighborBlockState = worldIn.getBlockState(mutablePos);
         cir.setReturnValue(ConfigsExtended.Generic.RENDER_HELD_ITEM_ONLY.getBooleanValue() && MiscUtils.checkHeldItem(item, neighborBlockState));
     }

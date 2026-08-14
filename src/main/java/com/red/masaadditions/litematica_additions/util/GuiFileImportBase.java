@@ -12,8 +12,8 @@ import fi.dy.masa.malilib.gui.interfaces.ISelectionListener;
 import fi.dy.masa.malilib.gui.widgets.WidgetFileBrowserBase;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
+import fi.dy.masa.malilib.render.GuiContext;
 import fi.dy.masa.malilib.util.StringUtils;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -96,10 +96,10 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public void drawContents(GuiGraphicsExtractor drawContext, int mouseX, int mouseY, float partialTicks) {
-        super.drawContents(drawContext, mouseX, mouseY, partialTicks);
+    public void drawContents(GuiContext context, int mouseX, int mouseY, float partialTicks) {
+        super.drawContents(context, mouseX, mouseY, partialTicks);
 
-        this.textField.extractWidgetRenderState(drawContext, mouseX, mouseY, partialTicks);
+        this.textField.extractWidgetRenderState(context.getGuiGraphics(), mouseX, mouseY, partialTicks);
     }
 
     @Override
