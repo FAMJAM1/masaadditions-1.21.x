@@ -4,7 +4,7 @@ import com.red.masaadditions.litematica_additions.mixin.MixinFlowerPotBlockAcces
 import fi.dy.masa.litematica.data.DataManager;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
-import net.minecraft.block.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.PistonType;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;

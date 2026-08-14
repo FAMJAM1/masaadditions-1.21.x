@@ -1,7 +1,7 @@
 package com.red.masaadditions.tweakeroo_additions.util;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import net.minecraft.block.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.Options;

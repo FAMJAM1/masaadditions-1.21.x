@@ -55,6 +55,8 @@ tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
     // Minecraft 26.1+ runs on Java 25
     it.options.release = 25
+    // Default is 100, which hides how much of the port is left
+    it.options.compilerArgs << '-Xmaxerrs' << '2000'
 }
 
 java {
