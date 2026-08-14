@@ -14,6 +14,9 @@ import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
 import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implements ISelectionListener<WidgetFileBrowserBase.DirectoryEntry> {
@@ -42,11 +45,11 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
         super.initGui();
 
         boolean focused = this.textField.isFocused();
-        String text = this.textField.getText();
-        int pos = this.textField.getCursor();
+        String text = this.textField.getValue();
+        int pos = this.textField.getCursorPosition();
         this.textField = new GuiTextFieldGeneric(10, 32, this.width - 196, 20, this.font);
-        this.textField.setText(text);
-        this.textField.setCursor(pos, false);
+        this.textField.setValue(text);
+        this.textField.moveCursorTo(pos, false);
         this.textField.setFocused(focused);
 
         WidgetFileBrowserBase.DirectoryEntry entry = this.getListWidget().getLastSelectedEntry();
@@ -68,12 +71,12 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
 
     protected void setTextFieldText(String text) {
         this.lastText = text;
-        this.textField.setText(text);
+        this.textField.setValue(text);
         this.textField.moveCursorToEnd(false);
     }
 
     protected String getTextFieldText() {
-        return this.textField.getText();
+        return this.textField.getValue();
     }
 
     protected abstract IButtonActionListener createButtonListener(GuiSchematicSaveBase.ButtonType type);
@@ -96,7 +99,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     public void drawContents(GuiGraphicsExtractor drawContext, int mouseX, int mouseY, float partialTicks) {
         super.drawContents(drawContext, mouseX, mouseY, partialTicks);
 
-        this.textField.render(drawContext, mouseX, mouseY, partialTicks);
+        this.textField.extractWidgetRenderState(drawContext, mouseX, mouseY, partialTicks);
     }
 
     @Override
@@ -112,34 +115,34 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (this.textField.mouseClicked(mouseX, mouseY, mouseButton)) {
+    public boolean onMouseClicked(MouseButtonEvent event, boolean doubled) {
+        if (this.textField.mouseClicked(event, doubled)) {
             return true;
         }
 
-        return super.onMouseClicked(mouseX, mouseY, mouseButton);
+        return super.onMouseClicked(event, doubled);
     }
 
     @Override
-    public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
-        if (this.textField.keyPressed(keyCode, scanCode, modifiers)) {
+    public boolean onKeyTyped(KeyEvent event) {
+        if (this.textField.keyPressed(event)) {
             this.getListWidget().clearSelection();
             return true;
-        } else if (keyCode == KeyCodes.KEY_TAB) {
+        } else if (event.key() == KeyCodes.KEY_TAB) {
             this.textField.setFocused(!this.textField.isFocused());
             return true;
         }
 
-        return super.onKeyTyped(keyCode, scanCode, modifiers);
+        return super.onKeyTyped(event);
     }
 
     @Override
-    public boolean onCharTyped(char charIn, int modifiers) {
-        if (this.textField.charTyped(charIn, modifiers)) {
+    public boolean onCharTyped(CharacterEvent event) {
+        if (this.textField.charTyped(event)) {
             this.getListWidget().clearSelection();
             return true;
         }
 
-        return super.onCharTyped(charIn, modifiers);
+        return super.onCharTyped(event);
     }
 }
