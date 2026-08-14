@@ -55,6 +55,25 @@ logoFile = "masaadditions-icon.png"
     ordering = "NONE"
     side = "CLIENT"
 
+# Mixin configs are declared here; the MixinConfigs manifest attribute is not read
+[[mixins]]
+    config = "masaadditions.tweakeroo_additions.tweakeroo_mixin.json"
+
+[[mixins]]
+    config = "masaadditions.tweakeroo_additions.mixin.json"
+
+[[mixins]]
+    config = "masaadditions.minihud_additions.minihud_mixin.json"
+
+[[mixins]]
+    config = "masaadditions.minihud_additions.mixin.json"
+
+[[mixins]]
+    config = "masaadditions.litematica_additions.litematica_mixin.json"
+
+[[mixins]]
+    config = "masaadditions.litematica_additions.mixin.json"
+
 # Access wideners are handled by Foxified ClassTweaker from 26.1 on
 [[foxified.classtweaker]]
     file = "masaadditions.accesswidener"

@@ -66,9 +66,4 @@ java {
 
 jar {
     from "LICENSE"
-    manifest {
-        attributes([
-            "MixinConfigs": "masaadditions.tweakeroo_additions.tweakeroo_mixin.json,masaadditions.tweakeroo_additions.mixin.json,masaadditions.minihud_additions.minihud_mixin.json,masaadditions.minihud_additions.mixin.json,masaadditions.litematica_additions.litematica_mixin.json,masaadditions.litematica_additions.mixin.json"
-        ])
-    }
 }
