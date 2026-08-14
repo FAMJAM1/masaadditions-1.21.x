@@ -3,29 +3,42 @@ package com.red.masaadditions.tweakeroo_additions.mixin;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.util.MiscUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
-import net.minecraft.world.inventory.ContainerInput;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(value = Equipment.class)
-public interface MixinEquipment {
-    @Inject(method = "equipAndSwap", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/InteractionResult;fail(Ljava/lang/Object;)Lnet/minecraft/world/InteractionResult;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void use(Item item, Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResult<ItemStack>> cir, ItemStack itemStack) {
+// Being equippable is a data component now, so the swap this tweak overrides sits
+// on Equippable rather than on the item.
+@Mixin(Equippable.class)
+public abstract class MixinEquipment {
+    @Shadow
+    public abstract EquipmentSlot slot();
+
+    @Inject(method = "swapWithEquipmentSlot", at = @At("HEAD"), cancellable = true)
+    private void forceSwapGear(ItemStack stack, Player user, CallbackInfoReturnable<InteractionResult> cir) {
         Minecraft mc = Minecraft.getInstance();
 
-        if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isShiftKeyDown() || hand != InteractionHand.MAIN_HAND || mc.gameMode == null || user.containerMenu != user.inventoryMenu) {
+        if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isShiftKeyDown()
+                || mc.gameMode == null || user.containerMenu != user.inventoryMenu) {
             return;
         }
 
-        mc.gameMode.clickSlot(user.inventoryMenu.containerId, MiscUtils.getSlotNumberForEquipmentSlot(user.getEquipmentSlotForItem(itemStack)), user.getInventory().selected, ContainerInput.SWAP, user);
-        cir.setReturnValue(InteractionResult.sidedSuccess(itemStack, world.isClientSide()));
+        int slotNumber = MiscUtils.getSlotNumberForEquipmentSlot(this.slot());
+
+        if (slotNumber < 0) {
+            return;
+        }
+
+        mc.gameMode.handleContainerInput(user.inventoryMenu.containerId, slotNumber,
+                user.getInventory().getSelectedSlot(), ContainerInput.SWAP, user);
+        cir.setReturnValue(InteractionResult.SUCCESS);
     }
 }

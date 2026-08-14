@@ -7,9 +7,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.chunk.VisGraph;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,7 +25,7 @@ public class MixinChunkRendererSchematicVbo {
     protected ChunkCacheSchematic schematicWorldView;
 
     @Inject(method = "renderBlocksAndOverlay", at = @At("HEAD"), cancellable = true)
-    private void renderBlocksAndOverlay(BlockPos pos, ChunkRenderDataSchematic data, BufferAllocatorCache allocators, Set<BlockEntity> tileEntities, Set<RenderType> usedLayers, PoseStack matrixStack, CallbackInfo ci) {
+    private void renderBlocksAndOverlay(BlockModelRendererSchematic blockRenderer, FluidModelRendererSchematic fluidRenderer, BlockPos pos, ChunkRenderDataSchematic data, ChunkMeshDataSchematic meshData, ChunkRenderDispatcherBuffers buffers, IBlockOutputSchematic output, Vec3 cameraPos, VisGraph visGraph, CallbackInfo ci) {
         LocalPlayer player = Minecraft.getInstance().player;
         ItemStack item = player != null ? player.getMainHandItem() : ItemStack.EMPTY;
         BlockState stateSchematic = this.schematicWorldView.getBlockState(pos);
