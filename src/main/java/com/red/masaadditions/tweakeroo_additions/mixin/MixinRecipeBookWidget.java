@@ -17,7 +17,7 @@ public abstract class MixinRecipeBookWidget {
     protected Minecraft client;
 
     // From UsefulMod by nessie
-    @Inject(method = "refreshInputs", at = @At("RETURN"))
+    @Inject(method = "updateStackedContents", at = @At("RETURN"))
     private void refreshInputs(CallbackInfo ci) {
         if (ConfigsExtended.Generic.CLICK_RECIPE_CRAFT.getBooleanValue() && GuiBase.isCtrlDown() && GuiBase.isShiftDown()) {
             client.gameMode.handleContainerInput(client.player.containerMenu.containerId, 0, 1, GuiBase.isAltDown() ? ContainerInput.THROW : ContainerInput.QUICK_MOVE, client.player);

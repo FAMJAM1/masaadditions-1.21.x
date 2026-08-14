@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public class MixinMinecraftClient {
-    @Inject(method = "handleInputEvents", at = @At("HEAD"))
+    @Inject(method = "handleKeybinds", at = @At("HEAD"))
     private void onProcessKeybindsPre(CallbackInfo ci)
     {
         if (((Minecraft) (Object) this).screen == null)
@@ -30,7 +30,7 @@ public class MixinMinecraftClient {
         }
     }
 
-    @Inject(method = "getWindowTitle", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "createTitle", at = @At("HEAD"), cancellable = true)
     private void getWindowTitle(CallbackInfoReturnable<String> cir) {
         if (FeatureToggleExtended.TWEAK_OVERRIDE_WINDOW_TITLE.getBooleanValue()) {
             cir.setReturnValue(ConfigsExtended.Generic.WINDOW_TITLE_OVERRIDE.getStringValue());

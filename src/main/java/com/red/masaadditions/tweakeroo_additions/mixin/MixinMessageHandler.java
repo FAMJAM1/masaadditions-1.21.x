@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatListener.class)
 public class MixinMessageHandler {
-    @Inject(method = "onGameMessage", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "handleSystemMessage", at = @At("HEAD"), cancellable = true)
     public void onGameMessage(Component message, boolean overlay, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SLEEPING_NOTIFICATION.getBooleanValue() && message.getContents() instanceof TranslatableContents text && (text.getKey().equals("sleep.skipping_night") || text.getKey().equals("sleep.players_sleeping")))
             ci.cancel();

@@ -17,7 +17,7 @@ public abstract class MixinChickenEntity extends Animal {
     }
 
     // From CutelessMod by nessie
-    @Inject(method = "tickMovement", at = @At("RETURN"))
+    @Inject(method = "aiStep", at = @At("RETURN"))
     private void derpyChicken(CallbackInfo ci) {
         if (ConfigsExtended.Generic.DERPY_CHICKEN.getBooleanValue())
             this.setXRot(-90F);

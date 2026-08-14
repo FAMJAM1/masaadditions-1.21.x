@@ -27,7 +27,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayer {
         }
     }
 
-    @Inject(method = "shouldSpawnSprintingParticles", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "canSpawnSprintParticle", at = @At("HEAD"), cancellable = true)
     private void shouldSpawnSprintingParticles(CallbackInfoReturnable<Boolean> cir) {
         if (ConfigsExtended.Disable.DISABLE_FOOTSTEP_PARTICLES.getBooleanValue())
             cir.setReturnValue(false);

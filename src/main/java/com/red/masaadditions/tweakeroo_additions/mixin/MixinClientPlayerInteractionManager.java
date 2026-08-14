@@ -42,35 +42,35 @@ public abstract class MixinClientPlayerInteractionManager {
     @Final
     private ClientPacketListener networkHandler;
 
-    @Inject(method = "attackBlock", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "startDestroyBlock", at = @At("HEAD"), cancellable = true)
     private void handleBreakingRestriction1(BlockPos pos, Direction side, CallbackInfoReturnable<Boolean> cir) {
         if (PlacementTweaks.onProcessLeftClickBlock(pos) || PlacementTweaks.isPositionDisallowedByPerimeterOutlineList(pos)) {
             cir.setReturnValue(false);
         }
     }
 
-    @Inject(method = "updateBlockBreakingProgress", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "continueDestroyBlock", at = @At("HEAD"), cancellable = true)
     private void handleBreakingRestriction2(BlockPos pos, Direction side, CallbackInfoReturnable<Boolean> cir) {
         if (PlacementTweaks.onProcessLeftClickBlock(pos) || PlacementTweaks.isPositionDisallowedByPerimeterOutlineList(pos)) {
             cir.setReturnValue(true);
         }
     }
 
-    @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;attack(Lnet/minecraft/world/entity/Entity;)V"))
+    @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;attack(Lnet/minecraft/world/entity/Entity;)V"))
     private void onAttackEntity1(Player player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.isCreative() && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
             ((LocalPlayer) player).connection.sendCommand(String.format("kill %s", target.getStringUUID()));
         }
     }
 
-    @Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
     private void onAttackEntity2(Player player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_PREVENT_ATTACK_ENTITIES.getBooleanValue() && ConfigsExtended.Lists.PREVENT_ATTACK_ENTITIES_LIST.getStrings().contains(EntityType.getKey(target.getType()).toString())) {
             ci.cancel();
         }
     }
 
-    @Inject(method = "interactEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;syncSelectedSlot()V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;syncSelectedSlot()V", shift = At.Shift.AFTER), cancellable = true)
     private void onInteractEntity(Player player, Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (FeatureToggleExtended.TWEAK_NAME_TAG_PIGLINS.getBooleanValue() && player.getItemInHand(hand).getItem() instanceof NameTagItem) {
             if (!(entity instanceof Piglin piglinEntity)) {

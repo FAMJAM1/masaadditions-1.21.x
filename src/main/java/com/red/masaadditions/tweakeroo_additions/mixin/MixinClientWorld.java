@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientLevel.class)
 public class MixinClientWorld {
-    @Inject(method = "getBlockParticle", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getMarkerParticleTarget", at = @At("HEAD"), cancellable = true)
     private void getBlockParticle(CallbackInfoReturnable<Block> cir) {
         if (FeatureToggleExtended.TWEAK_ALWAYS_RENDER_BARRIER_PARTICLES.getBooleanValue()) {
             cir.setReturnValue(Blocks.BARRIER);
