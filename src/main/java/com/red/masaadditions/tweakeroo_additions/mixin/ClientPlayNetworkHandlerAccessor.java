@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ClientPacketListener.class)
 public interface ClientPlayNetworkHandlerAccessor {
-    @Accessor
+    @Accessor("lastSeenMessages")
     LastSeenMessagesTracker getLastSeenMessagesCollector();
 }
