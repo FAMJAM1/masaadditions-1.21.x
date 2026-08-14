@@ -3,17 +3,17 @@ package com.red.masaadditions.tweakeroo_additions.mixin;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import net.minecraft.world.LunarWorldView;
-import net.minecraft.world.RegistryWorldView;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldProperties;
+import net.minecraft.world.level.CommonLevelAccessor;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.storage.LevelData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(value = WorldAccess.class, priority = 1001)
-public interface MixinWorldAccess extends RegistryWorldView, LunarWorldView {
+@Mixin(value = LevelAccessor.class, priority = 1001)
+public interface MixinWorldAccess extends CommonLevelAccessor, LunarWorldView {
     @Shadow
-    WorldProperties getLevelProperties();
+    LevelData getLevelProperties();
 
     /**
      * @author Red.#9015

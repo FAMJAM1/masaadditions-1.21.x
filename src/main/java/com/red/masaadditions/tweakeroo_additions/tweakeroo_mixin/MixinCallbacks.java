@@ -8,7 +8,7 @@ import com.red.masaadditions.tweakeroo_additions.util.Callbacks;
 import com.red.masaadditions.tweakeroo_additions.util.MiscUtils;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
 import fi.dy.masa.tweakeroo.config.FeatureToggle;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = fi.dy.masa.tweakeroo.config.Callbacks.class, remap = false)
 public abstract class MixinCallbacks {
     @Inject(method = "init", at = @At("RETURN"))
-    private static void init(MinecraftClient mc, CallbackInfo ci) {
+    private static void init(Minecraft mc, CallbackInfo ci) {
         final IHotkeyCallback callbackGeneric = new Callbacks.KeyCallbackHotkeysGeneric();
         HotkeysExtended.BLINK_DRIVE.getKeybind().setCallback(callbackGeneric);
         HotkeysExtended.BLINK_DRIVE_Y_LEVEL.getKeybind().setCallback(callbackGeneric);

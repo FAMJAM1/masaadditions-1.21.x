@@ -1,13 +1,13 @@
 package com.red.masaadditions.tweakeroo_additions.util;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.particle.BlockDustParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.particle.TerrainParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 
-public class BlockDustParticleExt extends BlockDustParticle {
+public class BlockDustParticleExt extends TerrainParticle {
     // From 1.12 Tweakeroo by Masa
-    public BlockDustParticleExt(ClientWorld worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, BlockState state, BlockPos pos) {
+    public BlockDustParticleExt(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, BlockState state, BlockPos pos) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state, pos);
     }
 }

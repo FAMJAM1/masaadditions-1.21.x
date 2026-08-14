@@ -13,7 +13,7 @@ import fi.dy.masa.malilib.gui.widgets.WidgetFileBrowserBase;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
 import fi.dy.masa.malilib.util.StringUtils;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implements ISelectionListener<WidgetFileBrowserBase.DirectoryEntry> {
@@ -93,7 +93,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public void drawContents(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
+    public void drawContents(GuiGraphicsExtractor drawContext, int mouseX, int mouseY, float partialTicks) {
         super.drawContents(drawContext, mouseX, mouseY, partialTicks);
 
         this.textField.render(drawContext, mouseX, mouseY, partialTicks);

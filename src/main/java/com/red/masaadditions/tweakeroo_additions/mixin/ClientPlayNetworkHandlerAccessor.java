@@ -1,12 +1,12 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.message.LastSeenMessagesCollector;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.chat.LastSeenMessagesTracker;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(ClientPlayNetworkHandler.class)
+@Mixin(ClientPacketListener.class)
 public interface ClientPlayNetworkHandlerAccessor {
     @Accessor
-    LastSeenMessagesCollector getLastSeenMessagesCollector();
+    LastSeenMessagesTracker getLastSeenMessagesCollector();
 }

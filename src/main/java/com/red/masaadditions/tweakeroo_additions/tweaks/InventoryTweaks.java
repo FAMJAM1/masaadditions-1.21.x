@@ -1,9 +1,9 @@
 package com.red.masaadditions.tweakeroo_additions.tweaks;
 
 import com.google.common.collect.Sets;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class InventoryTweaks {
             if (id == null) {
                 continue;
             }
-            Registries.ITEM.getOrEmpty(id).ifPresent(set::add);
+            BuiltInRegistries.ITEM.getOrEmpty(id).ifPresent(set::add);
         }
     }
 

@@ -4,8 +4,8 @@ import com.red.masaadditions.litematica_additions.util.FileImportUtil;
 import fi.dy.masa.litematica.gui.GuiMainMenu;
 import fi.dy.masa.litematica.gui.GuiSchematicLoad;
 import fi.dy.masa.litematica.gui.GuiSchematicManager;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.nio.file.Path;
@@ -15,7 +15,7 @@ import static fi.dy.masa.litematica.schematic.LitematicaSchematic.FILE_EXTENSION
 
 @Mixin(value = {GuiMainMenu.class, GuiSchematicManager.class, GuiSchematicLoad.class}, remap = false)
 public class MixinLitematicaGui extends Screen {
-    protected MixinLitematicaGui(Text title) {
+    protected MixinLitematicaGui(Component title) {
         super(title);
     }
 

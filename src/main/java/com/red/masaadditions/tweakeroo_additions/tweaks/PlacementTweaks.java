@@ -2,16 +2,16 @@ package com.red.masaadditions.tweakeroo_additions.tweaks;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
-import net.minecraft.block.Block;
-import net.minecraft.block.DragonEggBlock;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Heightmap;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DragonEggBlock;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class PlacementTweaks {
     public static final ArrayList<Block> PERIMETER_OUTLINE_BLOCKS = new ArrayList<>();
 
     public static boolean onProcessLeftClickBlock(BlockPos pos) {
-        PlayerEntity player = MinecraftClient.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && player != null && !player.isCreative() && player.getEntityWorld().getBlockState(pos).getBlock() instanceof DragonEggBlock;
     }
 
@@ -33,7 +33,7 @@ public class PlacementTweaks {
         if (!restrictionEnabled)
             return false;
 
-        ClientWorld world = MinecraftClient.getInstance().world;
+        ClientLevel world = Minecraft.getInstance().world;
         return world != null && PERIMETER_OUTLINE_BLOCKS.contains(world.getBlockState(world.getTopPosition(Heightmap.Type.WORLD_SURFACE, pos).down()).getBlock());
     }
 
@@ -52,7 +52,7 @@ public class PlacementTweaks {
     private static Block getBlockFromName(String name) {
         try {
             Identifier identifier = Identifier.of(name);
-            return Registries.BLOCK.getOrEmpty(identifier).orElse(null);
+            return BuiltInRegistries.BLOCK.getOrEmpty(identifier).orElse(null);
         } catch (Exception e) {
             return null;
         }

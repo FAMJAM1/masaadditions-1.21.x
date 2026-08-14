@@ -2,8 +2,8 @@ package com.red.masaadditions.litematica_additions.litematica_mixin;
 
 import com.red.masaadditions.litematica_additions.config.ConfigsExtended;
 import fi.dy.masa.litematica.scheduler.tasks.TaskCountBlocksPlacement;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -1,22 +1,22 @@
 package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.ItemFrameEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.decoration.ItemFrameEntity;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemFrameRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = ItemFrameEntityRenderer.class)
+@Mixin(value = ItemFrameRenderer.class)
 public class MixinItemFrameEntityRenderer {
-    private ItemFrameEntity itemFrameEntity;
+    private ItemFrame itemFrameEntity;
 
     @Inject(method = "render", at = @At(value = "HEAD"))
-    private void disableItemFrameFrameRendering(ItemFrameEntity itemFrameEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
+    private void disableItemFrameFrameRendering(ItemFrame itemFrameEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, CallbackInfo ci) {
         this.itemFrameEntity = itemFrameEntity;
     }
 

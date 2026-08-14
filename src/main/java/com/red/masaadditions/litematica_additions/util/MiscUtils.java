@@ -5,17 +5,17 @@ import fi.dy.masa.litematica.data.DataManager;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import net.minecraft.block.*;
-import net.minecraft.block.enums.PistonType;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.Potions;
-import net.minecraft.state.property.Properties;
+import net.minecraft.world.level.block.state.properties.PistonType;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.util.Util;
 
 import java.util.Arrays;
@@ -40,7 +40,7 @@ public class MiscUtils {
         if (heldItemStack.isEmpty()) {
             return false;
         } else if (stateSchematic.getBlock() == Blocks.PISTON_HEAD || stateSchematic.getBlock() == Blocks.MOVING_PISTON) {
-            match = heldItem == (stateSchematic.get(Properties.PISTON_TYPE) == PistonType.DEFAULT ? Blocks.PISTON : Blocks.STICKY_PISTON).asItem();
+            match = heldItem == (stateSchematic.get(BlockStateProperties.PISTON_TYPE) == PistonType.DEFAULT ? Blocks.PISTON : Blocks.STICKY_PISTON).asItem();
         } else if (stateSchematic.getFluidState().getFluid() == Fluids.WATER || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_WATER) {
             match = heldItem == Items.WATER_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.WATER_CAULDRON) {
@@ -54,15 +54,15 @@ public class MiscUtils {
         } else if (stateSchematic.getBlock() instanceof FlowerPotBlock) {
             Block content = ((MixinFlowerPotBlockAccessor) stateSchematic.getBlock()).getContent();
             match = content != null && heldItem == content.asItem() || heldItem == Items.FLOWER_POT;
-        } else if (stateSchematic.getBlock() instanceof Waterloggable && stateSchematic.get(Properties.WATERLOGGED)) {
+        } else if (stateSchematic.getBlock() instanceof Waterloggable && stateSchematic.get(BlockStateProperties.WATERLOGGED)) {
             match = heldItem == Items.WATER_BUCKET;
         }
         return !match && (Item.BLOCK_ITEMS.containsValue(heldItem) || IGNORED_ITEMS.contains(heldItem)) && heldItem != stateSchematic.getBlock().asItem();
     }
 
     private static Potion getPotion(ItemStack stack) {
-        ComponentMap components = stack.getComponents();
-        PotionContentsComponent potionComponent = components.get(DataComponentTypes.POTION_CONTENTS);
+        DataComponentMap components = stack.getComponents();
+        PotionContents potionComponent = components.get(DataComponents.POTION_CONTENTS);
         return potionComponent != null && potionComponent.potion().isPresent() ? potionComponent.potion().get().value() : null;
     }
 }

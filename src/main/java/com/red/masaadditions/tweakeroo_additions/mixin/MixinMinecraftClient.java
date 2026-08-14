@@ -3,9 +3,9 @@ package com.red.masaadditions.tweakeroo_additions.mixin;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
 import com.red.masaadditions.tweakeroo_additions.util.MiscUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,16 +14,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MinecraftClient.class)
+@Mixin(Minecraft.class)
 public class MixinMinecraftClient {
     @Inject(method = "handleInputEvents", at = @At("HEAD"))
     private void onProcessKeybindsPre(CallbackInfo ci)
     {
-        if (((MinecraftClient) (Object) this).currentScreen == null)
+        if (((Minecraft) (Object) this).currentScreen == null)
         {
             if (FeatureToggleExtended.TWEAK_MOVEMENT_HOLD.getBooleanValue())
             {
-                for (KeyBinding movementKey : MiscUtils.MOVEMENT_HOLD_KEYS) {
+                for (KeyMapping movementKey : MiscUtils.MOVEMENT_HOLD_KEYS) {
                     movementKey.setPressed(true);
                 }
             }

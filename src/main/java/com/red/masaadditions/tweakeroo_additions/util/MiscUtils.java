@@ -2,34 +2,34 @@ package com.red.masaadditions.tweakeroo_additions.util;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import net.minecraft.block.*;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.Options;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 
 import java.util.ArrayList;
 
 public class MiscUtils {
-    public static final ArrayList<KeyBinding> MOVEMENT_HOLD_KEYS = new ArrayList<>();
+    public static final ArrayList<KeyMapping> MOVEMENT_HOLD_KEYS = new ArrayList<>();
 
     public static void setMovementHoldKeys(boolean enabled) {
         if (!enabled) {
-            KeyBinding.updatePressedStates();
+            KeyMapping.updatePressedStates();
             return;
         }
 
         MOVEMENT_HOLD_KEYS.clear();
-        GameOptions options = MinecraftClient.getInstance().options;
-        KeyBinding[] movementKeys = { options.jumpKey, options.leftKey, options.rightKey, options.backKey, options.forwardKey };
-        for (KeyBinding movementKey : movementKeys) {
+        Options options = Minecraft.getInstance().options;
+        KeyMapping[] movementKeys = { options.jumpKey, options.leftKey, options.rightKey, options.backKey, options.forwardKey };
+        for (KeyMapping movementKey : movementKeys) {
             if (movementKey.isPressed()) {
                 MOVEMENT_HOLD_KEYS.add(movementKey);
             }
@@ -37,7 +37,7 @@ public class MiscUtils {
     }
 
     // From 1.12 Tweakeroo by Masa
-    public static void addCustomBlockBreakingParticles(ParticleManager manager, ClientWorld world, Random rand, BlockPos pos, BlockState state) {
+    public static void addCustomBlockBreakingParticles(ParticleEngine manager, ClientLevel world, RandomSource rand, BlockPos pos, BlockState state) {
         if (!state.isAir()) {
             int limit = ConfigsExtended.Generic.BLOCK_BREAKING_PARTICLE_LIMIT.getIntegerValue();
 
@@ -56,15 +56,15 @@ public class MiscUtils {
         }
     }
 
-    public static boolean handleUseSnowLayer(Block block, ClientPlayerEntity player) {
+    public static boolean handleUseSnowLayer(Block block, LocalPlayer player) {
         return ConfigsExtended.Disable.DISABLE_SNOW_LAYER_STACKING.getBooleanValue() && block instanceof SnowBlock;
     }
 
-    public static boolean handleUseDragonEgg(Block block, ClientPlayerEntity player) {
+    public static boolean handleUseDragonEgg(Block block, LocalPlayer player) {
         return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isSneaking();
     }
 
-    public static boolean handleUseBed(Block block, ClientWorld world) {
+    public static boolean handleUseBed(Block block, ClientLevel world) {
         return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.getDimension().bedWorks();
     }
 

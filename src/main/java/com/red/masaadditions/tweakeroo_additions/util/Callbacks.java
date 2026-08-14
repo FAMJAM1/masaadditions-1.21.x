@@ -13,17 +13,17 @@ import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
 import fi.dy.masa.malilib.util.InfoUtils;
 import fi.dy.masa.malilib.util.StringUtils;
 import fi.dy.masa.tweakeroo.util.RayTraceUtils;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.Vec3;
 
 public class Callbacks {
     public static class KeyCallbackHotkeysGeneric implements IHotkeyCallback {
-        private final MinecraftClient mc = MinecraftClient.getInstance();
+        private final Minecraft mc = Minecraft.getInstance();
 
         // From 1.12 Tweakeroo by Masa
         @Override
@@ -45,7 +45,7 @@ public class Callbacks {
                 HitResult trace = RayTraceUtils.getRayTraceFromEntity(this.mc.world, entity, true, this.mc.options.getClampedViewDistance() * 16 + 200);
 
                 if (trace.getType() != HitResult.Type.MISS) {
-                    Vec3d pos = trace.getPos();
+                    Vec3 pos = trace.getPos();
                     if (trace.getType() == HitResult.Type.BLOCK) {
                         pos = adjustPositionToSideOfEntity(pos, this.mc.player, ((BlockHitResult) trace).getSide());
                     }
@@ -55,7 +55,7 @@ public class Callbacks {
             }
         }
 
-        public static Vec3d adjustPositionToSideOfEntity(Vec3d pos, Entity entity, Direction side) {
+        public static Vec3 adjustPositionToSideOfEntity(Vec3 pos, Entity entity, Direction side) {
             double x = pos.x;
             double y = pos.y;
             double z = pos.z;
@@ -67,7 +67,7 @@ public class Callbacks {
                 z += side.getOffsetZ() * (entity.getWidth() / 2 + 1.0E-4D);
             }
 
-            return new Vec3d(x, y, z);
+            return new Vec3(x, y, z);
         }
     }
 
