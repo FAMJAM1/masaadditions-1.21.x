@@ -64,7 +64,7 @@ public abstract class MixinClientPlayerInteractionManager {
 
     @Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
     private void onAttackEntity2(Player player, Entity target, CallbackInfo ci) {
-        if (FeatureToggleExtended.TWEAK_PREVENT_ATTACK_ENTITIES.getBooleanValue() && ConfigsExtended.Lists.PREVENT_ATTACK_ENTITIES_LIST.getStrings().contains(EntityType.getId(target.getType()).toString())) {
+        if (FeatureToggleExtended.TWEAK_PREVENT_ATTACK_ENTITIES.getBooleanValue() && ConfigsExtended.Lists.PREVENT_ATTACK_ENTITIES_LIST.getStrings().contains(EntityType.getKey(target.getType()).toString())) {
             ci.cancel();
         }
     }
@@ -92,7 +92,7 @@ public abstract class MixinClientPlayerInteractionManager {
     private void modifyPlacementPacket(MutableObject<InteractionResult> result, LocalPlayer player, InteractionHand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
         if (PlacementTweaks.replacementModeUseStack != null) {
             if (!Minecraft.getInstance().isLocalServer()) {
-                this.networkHandler.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getSide()));
+                this.networkHandler.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getDirection()));
                 cir.setReturnValue(new ServerboundUseItemOnPacket(hand, blockHitResult, sequence));
             }
             PlacementTweaks.replacementModeUseStack = null;

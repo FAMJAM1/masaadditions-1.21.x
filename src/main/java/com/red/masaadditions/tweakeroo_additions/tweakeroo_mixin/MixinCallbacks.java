@@ -24,7 +24,7 @@ public abstract class MixinCallbacks {
         HotkeysExtended.BLINK_DRIVE.getKeybind().setCallback(callbackGeneric);
         HotkeysExtended.BLINK_DRIVE_Y_LEVEL.getKeybind().setCallback(callbackGeneric);
         ConfigsExtended.Lists.PERIMETER_OUTLINE_BLOCKS_LIST.setValueChangeCallback((cfg) -> PlacementTweaks.setPerimeterOutlineBlocks(cfg.getStrings()));
-        ConfigsExtended.Disable.DISABLE_PLANT_BLOCK_MODEL_OFFSET.setValueChangeCallback((cfg) -> mc.worldRenderer.reload());
+        ConfigsExtended.Disable.DISABLE_PLANT_BLOCK_MODEL_OFFSET.setValueChangeCallback((cfg) -> mc.levelRenderer.reload());
         FeatureToggleExtended.TWEAK_OVERRIDE_WINDOW_TITLE.setValueChangeCallback((cfg) -> mc.updateTitle());
         ConfigsExtended.Generic.WINDOW_TITLE_OVERRIDE.setValueChangeCallback((cfg) -> mc.updateTitle());
         ConfigsExtended.Disable.DISABLE_HONEY_BLOCK_SLOWDOWN.setValueChangeCallback(new Callbacks.FeatureCallbackHoney(ConfigsExtended.Disable.DISABLE_HONEY_BLOCK_SLOWDOWN));

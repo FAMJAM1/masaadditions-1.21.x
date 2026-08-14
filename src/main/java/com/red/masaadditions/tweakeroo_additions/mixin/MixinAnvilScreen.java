@@ -24,6 +24,6 @@ public abstract class MixinAnvilScreen extends ItemCombinerScreen<AnvilMenu> {
     private void setText(EditBox nameField, String text) {
         Slot slot = this.handler.getSlot(0);
         if (FeatureToggleExtended.TWEAK_ITEM_NAME_COPY.getBooleanValue() && slot != null && slot.hasItem())
-            nameField.setText(Minecraft.getInstance().keyboardHandler.getClipboard());
+            nameField.setValue(Minecraft.getInstance().keyboardHandler.getClipboard());
     }
 }

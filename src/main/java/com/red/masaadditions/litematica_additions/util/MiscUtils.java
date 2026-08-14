@@ -42,11 +42,11 @@ public class MiscUtils {
             return false;
         } else if (stateSchematic.getBlock() == Blocks.PISTON_HEAD || stateSchematic.getBlock() == Blocks.MOVING_PISTON) {
             match = heldItem == (stateSchematic.getValue(BlockStateProperties.PISTON_TYPE) == PistonType.DEFAULT ? Blocks.PISTON : Blocks.STICKY_PISTON).asItem();
-        } else if (stateSchematic.getFluidState().getFluid() == Fluids.WATER || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_WATER) {
+        } else if (stateSchematic.getFluidState().getType() == Fluids.WATER || stateSchematic.getFluidState().getType() == Fluids.FLOWING_WATER) {
             match = heldItem == Items.WATER_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.WATER_CAULDRON) {
             match = heldItem == Items.POTION && getPotion(heldItemStack) == Potions.WATER.value() || (stateSchematic.getValue(LayeredCauldronBlock.LEVEL) == 3 && heldItem == Items.WATER_BUCKET);
-        } else if (stateSchematic.getFluidState().getFluid() == Fluids.LAVA || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_LAVA || stateSchematic.getBlock() == Blocks.LAVA_CAULDRON) {
+        } else if (stateSchematic.getFluidState().getType() == Fluids.LAVA || stateSchematic.getFluidState().getType() == Fluids.FLOWING_LAVA || stateSchematic.getBlock() == Blocks.LAVA_CAULDRON) {
             match = heldItem == Items.LAVA_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.POWDER_SNOW || stateSchematic.getBlock() == Blocks.POWDER_SNOW_CAULDRON) {
             match = heldItem == Items.POWDER_SNOW_BUCKET;

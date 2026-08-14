@@ -25,7 +25,7 @@ public interface MixinEquipment {
             return;
         }
 
-        mc.gameMode.clickSlot(user.inventoryMenu.syncId, MiscUtils.getSlotNumberForEquipmentSlot(user.getEquipmentSlotForItem(itemStack)), user.getInventory().selectedSlot, ContainerInput.SWAP, user);
-        cir.setReturnValue(InteractionResult.success(itemStack, world.isClientSide()));
+        mc.gameMode.clickSlot(user.inventoryMenu.containerId, MiscUtils.getSlotNumberForEquipmentSlot(user.getEquipmentSlotForItem(itemStack)), user.getInventory().selected, ContainerInput.SWAP, user);
+        cir.setReturnValue(InteractionResult.sidedSuccess(itemStack, world.isClientSide()));
     }
 }

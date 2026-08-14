@@ -33,7 +33,7 @@ public class PlacementTweaks {
         if (!restrictionEnabled)
             return false;
 
-        ClientLevel world = Minecraft.getInstance().world;
+        ClientLevel level = Minecraft.getInstance().level;
         return world != null && PERIMETER_OUTLINE_BLOCKS.contains(world.getBlockState(world.getTopPosition(Heightmap.Type.WORLD_SURFACE, pos).down()).getBlock());
     }
 
