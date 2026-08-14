@@ -18,7 +18,7 @@ public class MixinClientPlayNetworkHandler {
         // LocalPlayer::showDeathScreen will prevent tweakPrintDeathCoordinates from working
         LocalPlayer player = Minecraft.getInstance().player;
         if (FeatureToggleExtended.TWEAK_RESPAWN_ON_DEATH.getBooleanValue() && player != null) {
-            player.requestRespawn();
+            player.respawn();
         }
     }
 }

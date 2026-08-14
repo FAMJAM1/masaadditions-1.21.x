@@ -11,7 +11,8 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin {
     private static boolean hasForgematica() {
-        var list = FMLLoader.getLoadingModList();
+        var loader = FMLLoader.getCurrentOrNull();
+        var list = loader != null ? loader.getLoadingModList() : null;
         return list != null && list.getModFileById("forgematica") != null;
     }
 

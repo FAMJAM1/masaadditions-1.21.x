@@ -23,8 +23,8 @@ public abstract class MixinBlockDustParticle extends SingleQuadParticle {
             this.velocityX *= multiplier;
             this.velocityY *= multiplier;
             this.velocityZ *= multiplier;
-            this.maxAge *= multiplier;
-            this.gravityStrength = 0F;
+            this.lifetime *= multiplier;
+            this.gravity = 0F;
         }
     }
 }

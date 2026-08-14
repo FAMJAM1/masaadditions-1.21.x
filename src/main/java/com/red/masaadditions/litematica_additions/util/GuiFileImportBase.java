@@ -27,7 +27,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
 
         this.schematic = schematic;
 
-        this.textField = new GuiTextFieldGeneric(10, 32, 160, 20, this.textRenderer);
+        this.textField = new GuiTextFieldGeneric(10, 32, 160, 20, this.font);
         this.textField.setMaxLength(256);
         this.textField.setFocused(true);
     }
@@ -44,7 +44,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
         boolean focused = this.textField.isFocused();
         String text = this.textField.getText();
         int pos = this.textField.getCursor();
-        this.textField = new GuiTextFieldGeneric(10, 32, this.width - 196, 20, this.textRenderer);
+        this.textField = new GuiTextFieldGeneric(10, 32, this.width - 196, 20, this.font);
         this.textField.setText(text);
         this.textField.setCursor(pos, false);
         this.textField.setFocused(focused);
@@ -69,7 +69,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     protected void setTextFieldText(String text) {
         this.lastText = text;
         this.textField.setText(text);
-        this.textField.setCursorToEnd(false);
+        this.textField.moveCursorToEnd(false);
     }
 
     protected String getTextFieldText() {

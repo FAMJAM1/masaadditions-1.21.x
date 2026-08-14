@@ -23,6 +23,6 @@ public interface MixinWorldAccess extends CommonLevelAccessor, LunarWorldView {
     default long getLunarTime() {
         if (FeatureToggleExtended.TWEAK_OVERRIDE_SKY_TIME.getBooleanValue())
             return ConfigsExtended.Generic.SKY_TIME_OVERRIDE.getIntegerValue();
-        return this.getLevelProperties().getTimeOfDay();
+        return this.getLevelProperties().getDayTime();
     }
 }

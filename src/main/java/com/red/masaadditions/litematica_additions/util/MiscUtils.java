@@ -5,6 +5,7 @@ import fi.dy.masa.litematica.data.DataManager;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.IButtonActionListener;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.PistonType;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
@@ -29,7 +30,7 @@ public class MiscUtils {
     public static class ButtonListenerOpenFolder implements IButtonActionListener {
         @Override
         public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-            Util.getOperatingSystem().open(DataManager.getSchematicsBaseDirectory());
+            Util.getPlatform().openPath(DataManager.getSchematicsBaseDirectory());
         }
     }
 
@@ -40,11 +41,11 @@ public class MiscUtils {
         if (heldItemStack.isEmpty()) {
             return false;
         } else if (stateSchematic.getBlock() == Blocks.PISTON_HEAD || stateSchematic.getBlock() == Blocks.MOVING_PISTON) {
-            match = heldItem == (stateSchematic.get(BlockStateProperties.PISTON_TYPE) == PistonType.DEFAULT ? Blocks.PISTON : Blocks.STICKY_PISTON).asItem();
+            match = heldItem == (stateSchematic.getValue(BlockStateProperties.PISTON_TYPE) == PistonType.DEFAULT ? Blocks.PISTON : Blocks.STICKY_PISTON).asItem();
         } else if (stateSchematic.getFluidState().getFluid() == Fluids.WATER || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_WATER) {
             match = heldItem == Items.WATER_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.WATER_CAULDRON) {
-            match = heldItem == Items.POTION && getPotion(heldItemStack) == Potions.WATER || (stateSchematic.get(LeveledCauldronBlock.LEVEL) == 3 && heldItem == Items.WATER_BUCKET);
+            match = heldItem == Items.POTION && getPotion(heldItemStack) == Potions.WATER.value() || (stateSchematic.getValue(LayeredCauldronBlock.LEVEL) == 3 && heldItem == Items.WATER_BUCKET);
         } else if (stateSchematic.getFluidState().getFluid() == Fluids.LAVA || stateSchematic.getFluidState().getFluid() == Fluids.FLOWING_LAVA || stateSchematic.getBlock() == Blocks.LAVA_CAULDRON) {
             match = heldItem == Items.LAVA_BUCKET;
         } else if (stateSchematic.getBlock() == Blocks.POWDER_SNOW || stateSchematic.getBlock() == Blocks.POWDER_SNOW_CAULDRON) {
@@ -54,10 +55,10 @@ public class MiscUtils {
         } else if (stateSchematic.getBlock() instanceof FlowerPotBlock) {
             Block content = ((MixinFlowerPotBlockAccessor) stateSchematic.getBlock()).getContent();
             match = content != null && heldItem == content.asItem() || heldItem == Items.FLOWER_POT;
-        } else if (stateSchematic.getBlock() instanceof Waterloggable && stateSchematic.get(BlockStateProperties.WATERLOGGED)) {
+        } else if (stateSchematic.getBlock() instanceof SimpleWaterloggedBlock && stateSchematic.getValue(BlockStateProperties.WATERLOGGED)) {
             match = heldItem == Items.WATER_BUCKET;
         }
-        return !match && (Item.BLOCK_ITEMS.containsValue(heldItem) || IGNORED_ITEMS.contains(heldItem)) && heldItem != stateSchematic.getBlock().asItem();
+        return !match && (Item.BY_BLOCK.containsValue(heldItem) || IGNORED_ITEMS.contains(heldItem)) && heldItem != stateSchematic.getBlock().asItem();
     }
 
     private static Potion getPotion(ItemStack stack) {

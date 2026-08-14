@@ -22,6 +22,6 @@ public class MixinMiscTweaks {
     @ModifyVariable(method = "doPotionWarnings", at = @At(value = "STORE", target = "Lfi/dy/masa/tweakeroo/tweaks/MiscTweaks;doPotionWarnings(Lnet/minecraft/world/entity/player/Player;)V"))
     private static Collection<MobEffectInstance> doPotionWarnings(Collection<MobEffectInstance> effects) {
         LocalPlayer player = Minecraft.getInstance().player;
-        return player != null && player.getEquippedStack(EquipmentSlot.HEAD).getItem() != Items.TURTLE_HELMET ? effects : effects.stream().filter(e -> e.getEffectType() != MobEffects.WATER_BREATHING).collect(Collectors.toCollection(TreeSet::new));
+        return player != null && player.getItemBySlot(EquipmentSlot.HEAD).getItem() != Items.TURTLE_HELMET ? effects : effects.stream().filter(e -> e.getEffect() != MobEffects.WATER_BREATHING).collect(Collectors.toCollection(TreeSet::new));
     }
 }

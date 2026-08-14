@@ -21,11 +21,11 @@ public interface MixinEquipment {
     private void use(Item item, Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResult<ItemStack>> cir, ItemStack itemStack) {
         Minecraft mc = Minecraft.getInstance();
 
-        if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isSneaking() || hand != InteractionHand.MAIN_HAND || mc.interactionManager == null || user.currentScreenHandler != user.playerScreenHandler) {
+        if (!FeatureToggleExtended.TWEAK_FORCE_SWAP_GEAR.getBooleanValue() || !user.isSneaking() || hand != InteractionHand.MAIN_HAND || mc.gameMode == null || user.containerMenu != user.inventoryMenu) {
             return;
         }
 
-        mc.interactionManager.clickSlot(user.playerScreenHandler.syncId, MiscUtils.getSlotNumberForEquipmentSlot(user.getPreferredEquipmentSlot(itemStack)), user.getInventory().selectedSlot, ContainerInput.SWAP, user);
-        cir.setReturnValue(InteractionResult.success(itemStack, world.isClient()));
+        mc.gameMode.clickSlot(user.inventoryMenu.syncId, MiscUtils.getSlotNumberForEquipmentSlot(user.getEquipmentSlotForItem(itemStack)), user.getInventory().selectedSlot, ContainerInput.SWAP, user);
+        cir.setReturnValue(InteractionResult.success(itemStack, world.isClientSide()));
     }
 }

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class MixinAbstractHorseEntity {
     @Redirect(method = "getControllingPassenger()Lnet/minecraft/world/entity/LivingEntity;", require = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/equine/AbstractHorse;isSaddled()Z"))
     public boolean spoofIsSaddled(AbstractHorse entity) {
-        if (FeatureToggleExtended.TWEAK_LLAMA_STEERING.getBooleanValue() && (Object) this instanceof Llama && ((Llama) (Object) this).getCarpetColor() != null) // The only way to know on the client that the Llama has a Carpet
+        if (FeatureToggleExtended.TWEAK_LLAMA_STEERING.getBooleanValue() && (Object) this instanceof Llama && ((Llama) (Object) this).getSwag() != null) // The only way to know on the client that the Llama has a Carpet
         {
             return true;
         }

@@ -22,7 +22,7 @@ public abstract class MixinClientPlayerEntity extends AbstractClientPlayer {
 
     @Inject(method = "canStartSprinting", at = @At("HEAD"), cancellable = true)
     private void setSprinting(CallbackInfoReturnable<Boolean> cir) {
-        if (ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue() && ((this.isTouchingWater() && !this.isSubmergedInWater()) || (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue()))) {
+        if (ConfigsExtended.Disable.DISABLE_SPRINTING_UNDERWATER.getBooleanValue() && ((this.isInWater() && !this.isSubmergedInWater()) || (ConfigsExtended.Disable.DISABLE_SWIMMING.getBooleanValue()))) {
             cir.setReturnValue(false);
         }
     }

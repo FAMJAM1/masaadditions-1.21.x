@@ -20,7 +20,7 @@ public abstract class MixinRecipeBookWidget {
     @Inject(method = "refreshInputs", at = @At("RETURN"))
     private void refreshInputs(CallbackInfo ci) {
         if (ConfigsExtended.Generic.CLICK_RECIPE_CRAFT.getBooleanValue() && Screen.hasControlDown() && Screen.hasShiftDown()) {
-            client.interactionManager.clickSlot(client.player.currentScreenHandler.syncId, 0, 1, Screen.hasAltDown() ? ContainerInput.THROW : ContainerInput.QUICK_MOVE, client.player);
+            client.gameMode.clickSlot(client.player.containerMenu.syncId, 0, 1, Screen.hasAltDown() ? ContainerInput.THROW : ContainerInput.QUICK_MOVE, client.player);
         }
     }
 }

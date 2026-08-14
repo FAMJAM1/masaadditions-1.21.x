@@ -37,7 +37,7 @@ public class GuiFileImport extends GuiFileImportBase implements ICompletionListe
 
     @Override
     public void onTaskCompleted() {
-        if (this.mc.isOnThread()) {
+        if (this.mc.isSameThread()) {
             this.refreshList();
         } else {
             this.mc.execute(GuiFileImport.this::refreshList);

@@ -19,12 +19,12 @@ public class MixinMinecraftClient {
     @Inject(method = "handleInputEvents", at = @At("HEAD"))
     private void onProcessKeybindsPre(CallbackInfo ci)
     {
-        if (((Minecraft) (Object) this).currentScreen == null)
+        if (((Minecraft) (Object) this).screen == null)
         {
             if (FeatureToggleExtended.TWEAK_MOVEMENT_HOLD.getBooleanValue())
             {
                 for (KeyMapping movementKey : MiscUtils.MOVEMENT_HOLD_KEYS) {
-                    movementKey.setPressed(true);
+                    movementKey.setDown(true);
                 }
             }
         }

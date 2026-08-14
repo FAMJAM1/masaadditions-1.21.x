@@ -9,6 +9,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class MixinModelPredicateProviderRegistry {
     @Redirect(method = "Lnet/minecraft/client/item/ModelPredicateProviderRegistry$1;unclampedCall(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/LivingEntity;I)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getSkyAngle(F)F"))
     private float getSkyAngle(ClientLevel clientWorld, float tickDelta) {
-        return clientWorld.getDimension().getSkyAngle(clientWorld.getLevelProperties().getTimeOfDay());
+        return clientWorld.getDimension().getSkyAngle(clientWorld.getLevelData().getTimeOfDay());
     }
 }

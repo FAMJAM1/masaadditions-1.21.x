@@ -22,6 +22,6 @@ public class MixinItemFrameEntityRenderer {
 
     @ModifyVariable(method = "render", at = @At("STORE"))
     private boolean disableItemFrameFrameRendering(boolean bl) {
-        return ConfigsExtended.Disable.DISABLE_ITEM_FRAME_FRAME_RENDERING.getBooleanValue() && !itemFrameEntity.getHeldItemStack().isEmpty() || itemFrameEntity.isInvisible();
+        return ConfigsExtended.Disable.DISABLE_ITEM_FRAME_FRAME_RENDERING.getBooleanValue() && !itemFrameEntity.getItem().isEmpty() || itemFrameEntity.isInvisible();
     }
 }

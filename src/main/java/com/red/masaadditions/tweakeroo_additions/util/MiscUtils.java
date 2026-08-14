@@ -22,15 +22,15 @@ public class MiscUtils {
 
     public static void setMovementHoldKeys(boolean enabled) {
         if (!enabled) {
-            KeyMapping.updatePressedStates();
+            KeyMapping.setAll();
             return;
         }
 
         MOVEMENT_HOLD_KEYS.clear();
         Options options = Minecraft.getInstance().options;
-        KeyMapping[] movementKeys = { options.jumpKey, options.leftKey, options.rightKey, options.backKey, options.forwardKey };
+        KeyMapping[] movementKeys = { options.keyJump, options.keyLeft, options.keyRight, options.keyDown, options.keyUp };
         for (KeyMapping movementKey : movementKeys) {
-            if (movementKey.isPressed()) {
+            if (movementKey.isDown()) {
                 MOVEMENT_HOLD_KEYS.add(movementKey);
             }
         }

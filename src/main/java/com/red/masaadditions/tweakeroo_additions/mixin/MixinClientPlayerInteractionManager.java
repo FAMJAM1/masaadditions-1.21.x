@@ -58,7 +58,7 @@ public abstract class MixinClientPlayerInteractionManager {
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;attack(Lnet/minecraft/world/entity/Entity;)V"))
     private void onAttackEntity1(Player player, Entity target, CallbackInfo ci) {
         if (FeatureToggleExtended.TWEAK_ONE_HIT_KILL.getBooleanValue() && player.isCreative() && target instanceof LivingEntity && ((LivingEntity) target).getHealth() > 0f) {
-            ((LocalPlayer) player).networkHandler.sendCommand(String.format("kill %s", target.getUuidAsString()));
+            ((LocalPlayer) player).connection.sendCommand(String.format("kill %s", target.getStringUUID()));
         }
     }
 
@@ -71,13 +71,13 @@ public abstract class MixinClientPlayerInteractionManager {
 
     @Inject(method = "interactEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;syncSelectedSlot()V", shift = At.Shift.AFTER), cancellable = true)
     private void onInteractEntity(Player player, Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        if (FeatureToggleExtended.TWEAK_NAME_TAG_PIGLINS.getBooleanValue() && player.getStackInHand(hand).getItem() instanceof NameTagItem) {
+        if (FeatureToggleExtended.TWEAK_NAME_TAG_PIGLINS.getBooleanValue() && player.getItemInHand(hand).getItem() instanceof NameTagItem) {
             if (!(entity instanceof Piglin piglinEntity)) {
                 cir.setReturnValue(InteractionResult.PASS);
                 return;
             }
 
-            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getHandItems().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
+            if (piglinEntity.isBaby() || piglinEntity.getCustomName() != null || StreamSupport.stream(piglinEntity.getHandSlots().spliterator(), false).noneMatch(itemStack -> itemStack.getItem() instanceof SwordItem)) {
                 cir.setReturnValue(InteractionResult.PASS);
             }
         }
@@ -91,7 +91,7 @@ public abstract class MixinClientPlayerInteractionManager {
     @Inject(method = "method_41933", at = @At("RETURN"), cancellable = true)
     private void modifyPlacementPacket(MutableObject<InteractionResult> result, LocalPlayer player, InteractionHand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
         if (PlacementTweaks.replacementModeUseStack != null) {
-            if (!Minecraft.getInstance().isInSingleplayer()) {
+            if (!Minecraft.getInstance().isLocalServer()) {
                 this.networkHandler.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK, blockHitResult.getBlockPos(), blockHitResult.getSide()));
                 cir.setReturnValue(new ServerboundUseItemOnPacket(hand, blockHitResult, sequence));
             }

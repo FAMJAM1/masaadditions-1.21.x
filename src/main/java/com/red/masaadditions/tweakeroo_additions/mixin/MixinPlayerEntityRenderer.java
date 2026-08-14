@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinPlayerEntityRenderer {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(AbstractClientPlayer abstractClientPlayerEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, CallbackInfo ci) {
-        if (ConfigsExtended.Disable.DISABLE_OTHER_PLAYER_RENDERING.getBooleanValue() && !abstractClientPlayerEntity.isMainPlayer())
+        if (ConfigsExtended.Disable.DISABLE_OTHER_PLAYER_RENDERING.getBooleanValue() && !abstractClientPlayerEntity.isLocalPlayer())
             ci.cancel();
     }
 }
