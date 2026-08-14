@@ -1,46 +1,60 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 license = "GPL-3.0"
+issueTrackerURL = "https://github.com/FAMJAM1/masaadditions-port/issues"
 
 [[mods]]
 modId = "masaadditions"
 version = "${version}"
 displayName = "MasaAdditions"
-description = "Unofficial port of MasaAdditions to Minecraft 1.21.1 (NeoForge)"
+displayURL = "https://github.com/FAMJAM1/masaadditions-port"
+description = "Unofficial NeoForge port of MasaAdditions, an add-on for masa's Tweakeroo, MiniHUD and Litematica."
 authors = "FAMJAM"
+credits = "hp3721"
 logoFile = "masaadditions-icon.png"
 
 [[dependencies.masaadditions]]
     modId = "neoforge"
     type = "required"
-    versionRange = "[21.1,)"
+    versionRange = "[26.1,)"
+    ordering = "NONE"
+    side = "CLIENT"
+
+[[dependencies.masaadditions]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[26.1,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "mafglib"
     type = "required"
-    versionRange = "[0.4,)"
+    versionRange = "[0.5,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "forgematica"
     type = "optional"
-    versionRange = "[0.3,)"
+    versionRange = "[0.5,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "tweakerge"
     type = "optional"
-    versionRange = "[0.3,)"
+    versionRange = "[0.5,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "bocchud"
     type = "optional"
-    versionRange = "[0.3,)"
+    versionRange = "[0.5,)"
     ordering = "NONE"
     side = "CLIENT"
+
+# Access wideners are handled by Foxified ClassTweaker from 26.1 on
+[[foxified.classtweaker]]
+    file = "masaadditions.accesswidener"

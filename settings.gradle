@@ -6,3 +6,8 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+plugins {
+    // Downloads the JDK the target Minecraft version needs, so no system install is required
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}

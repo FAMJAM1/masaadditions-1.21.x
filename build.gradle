@@ -1,16 +1,20 @@
 plugins {
-    id 'dev.architectury.loom' version '1.9-SNAPSHOT'
+    // no-remap: from 26.1 on, masa's NeoForge ports are compiled straight against
+    // Mojang names, so there is nothing left to remap
+    id 'dev.architectury.loom-no-remap' version '1.17.491'
     id 'maven-publish'
 }
 
+String mod_version = "${mod_base_version}+${mod_version_meta}"
+
 base {
     archivesName = project.archives_base_name
-    version = project.mod_version
+    version = mod_version
     group = project.maven_group
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/masaadditions.aw")
+    accessWidenerPath = file("src/main/resources/masaadditions.accesswidener")
     neoForge {}
 }
 
@@ -24,16 +28,20 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.layered {
-        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-        mappings "dev.architectury:yarn-mappings-patch-neoforge:${project.yarn_mappings_patch}"
-    }
+    // No mappings: the game ships unobfuscated from 26.1 on
     neoForge "net.neoforged:neoforge:${project.neoforge_version}"
 
-    modImplementation "maven.modrinth:mafglib:${project.mafglib_version}"
-    modImplementation "maven.modrinth:forgematica:${project.forgematica_version}"
-    modImplementation "maven.modrinth:tweakerge:${project.tweakerge_version}"
-    modImplementation "maven.modrinth:bocchud:${project.bocchud_version}"
+    // The mods this one extends. Compile only: the player installs them separately.
+    compileOnly "maven.modrinth:mafglib:${project.mafglib_version}"
+    compileOnly "maven.modrinth:forgematica:${project.forgematica_version}"
+    compileOnly "maven.modrinth:tweakerge:${project.tweakerge_version}"
+    compileOnly "maven.modrinth:bocchud:${project.bocchud_version}"
+
+    runtimeOnly "maven.modrinth:mafglib:${project.mafglib_version}"
+    runtimeOnly "maven.modrinth:forgematica:${project.forgematica_version}"
+    runtimeOnly "maven.modrinth:tweakerge:${project.tweakerge_version}"
+    runtimeOnly "maven.modrinth:bocchud:${project.bocchud_version}"
+    runtimeOnly "maven.modrinth:foxifiedclasstweaker:${project.foxified_classtweaker_version}"
 }
 
 processResources {
@@ -45,12 +53,12 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    it.options.release = 21
+    // Minecraft 26.1+ runs on Java 25
+    it.options.release = 25
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
     withSourcesJar()
 }
 
