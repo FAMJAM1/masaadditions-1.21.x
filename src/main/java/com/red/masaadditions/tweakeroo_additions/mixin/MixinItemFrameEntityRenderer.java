@@ -18,7 +18,7 @@ public class MixinItemFrameEntityRenderer {
                     ordinal = 0))
     private boolean disableItemFrameFrameRendering(ItemFrameRenderState state) {
         if (ConfigsExtended.Disable.DISABLE_ITEM_FRAME_FRAME_RENDERING.getBooleanValue()
-                && !state.item.isEmpty()) {
+                && !state.itemStack.isEmpty()) {
             return true;
         }
 
