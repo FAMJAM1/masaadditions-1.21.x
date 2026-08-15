@@ -9,7 +9,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +51,7 @@ public class PlacementTweaks {
     @Nullable
     private static Block getBlockFromName(String name) {
         try {
-            Identifier identifier = Identifier.parse(name);
+            ResourceLocation identifier = ResourceLocation.parse(name);
             return BuiltInRegistries.BLOCK.getOptional(identifier).orElse(null);
         } catch (Exception e) {
             return null;

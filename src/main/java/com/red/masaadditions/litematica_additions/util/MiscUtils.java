@@ -17,7 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.util.Util;
+import net.minecraft.Util;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BlockModelRendererSchematic.class, remap = false)
 public class MixinBlockModelRendererSchematic {
     @Inject(method = "shouldRenderModelSide", at = @At("RETURN"), cancellable = true)
-    private static void shouldRenderModelSide(BlockAndTintGetter worldIn, BlockState stateIn, BlockPos posIn, Direction side, boolean translucent, BlockPos mutablePos, CallbackInfoReturnable<Boolean> cir) {
+    private static void shouldRenderModelSide(BlockAndTintGetter worldIn, BlockState stateIn, BlockPos posIn, Direction side, BlockPos mutablePos, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             return;
         }

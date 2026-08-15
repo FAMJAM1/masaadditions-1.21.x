@@ -15,8 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.attribute.BedRule;
-import net.minecraft.world.attribute.EnvironmentAttributes;
 
 import java.util.ArrayList;
 
@@ -67,14 +65,9 @@ public class MiscUtils {
         return ConfigsExtended.Disable.DISABLE_DRAGON_EGG_TELEPORTING.getBooleanValue() && block instanceof DragonEggBlock && !player.isShiftKeyDown();
     }
 
-    // Whether a bed blows up is an environment attribute now, read per position
-    public static boolean handleUseBed(Block block, ClientLevel world, BlockPos pos) {
-        if (!ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() || !(block instanceof BedBlock)) {
-            return false;
-        }
-
-        BedRule rule = world.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos);
-        return rule != null && rule.explodes();
+    // Whether a bed blows up is a property of the dimension as a whole here
+    public static boolean handleUseBed(Block block, ClientLevel world) {
+        return ConfigsExtended.Disable.DISABLE_BED_EXPLOSIONS.getBooleanValue() && block instanceof BedBlock && !world.dimensionType().bedWorks();
     }
 
     public static boolean handleUseTools(Block block, Item heldItem) {
