@@ -58,7 +58,6 @@ public class ConfigsExtended {
 
     private static final String DISABLE_KEY = MasaAdditions.MOD_ID+ ".config.configs_extended2.disable";
     public static class Disable {
-        public static final ConfigBooleanHotkeyed DISABLE_BEACON_BEAM_RENDERING = new ConfigBooleanHotkeyed("disableBeaconBeamRendering", false, "").apply(DISABLE_KEY);
         public static final ConfigBooleanHotkeyed DISABLE_BED_EXPLOSIONS = new ConfigBooleanHotkeyed("disableBedExplosions", false, "").apply(DISABLE_KEY);
         public static final ConfigBooleanHotkeyed DISABLE_BLOCK_ATTACKED_PARTICLES = new ConfigBooleanHotkeyed("disableBlockAttackedParticles", false, "").apply(DISABLE_KEY);
         public static final ConfigBooleanHotkeyed DISABLE_BOSS_BAR_RENDERING = new ConfigBooleanHotkeyed("disableBossBarRendering", false, "").apply(DISABLE_KEY);
@@ -82,7 +81,6 @@ public class ConfigsExtended {
         public static final ConfigBooleanHotkeyed DISABLE_SWIMMING = new ConfigBooleanHotkeyed("disableSwimming", false, "").apply(DISABLE_KEY);
 
         public static final ImmutableList<IHotkeyTogglable> ADDITIONAL_OPTIONS = ImmutableList.of(
-                DISABLE_BEACON_BEAM_RENDERING,
                 DISABLE_BED_EXPLOSIONS,
                 DISABLE_BLOCK_ATTACKED_PARTICLES,
                 DISABLE_BOSS_BAR_RENDERING,

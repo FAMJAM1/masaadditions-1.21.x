@@ -3,9 +3,11 @@ plugins {
     id 'maven-publish'
 }
 
+String mod_version = "${mod_base_version}+${mod_version_meta}"
+
 base {
     archivesName = project.archives_base_name
-    version = project.mod_version
+    version = mod_version
     group = project.maven_group
 }
 

@@ -10,11 +10,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(BlockItem.class)
 public class MixinBlockItem {
-    @ModifyVariable(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", ordinal = 1, at = @At(value = "STORE", ordinal = 0), slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/item/BlockItem;getPlacementState(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;")))
+    // No slice: the context is stored before getPlacementState is called, so a slice
+    // starting there leaves nothing to modify. The ordinal stays, since the method holds
+    // two contexts of its own -- the parameter and the updated one this wants.
+    @ModifyVariable(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", ordinal = 1, at = @At(value = "STORE", ordinal = 0))
     private ItemPlacementContext modifyPlacementContext(ItemPlacementContext context) {
         boolean useReplacementMode = HotkeysExtended.REPLACEMENT_MODE.getKeybind().isKeybindHeld()
             && tweakermore_areWeThePlayer(context)

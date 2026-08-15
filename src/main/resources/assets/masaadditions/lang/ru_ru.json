@@ -22,7 +22,6 @@
   "masaadditions.config.configs_extended2.lists.name.swapAlmostBrokenToolsWhitelist": "swapAlmostBrokenToolsWhitelist",
   "masaadditions.config.configs_extended2.lists.name.swapAlmostBrokenToolsBlacklist": "swapAlmostBrokenToolsBlacklist",
 
-  "masaadditions.config.configs_extended2.disable.name.disableBeaconBeamRendering": "disableBeaconBeamRendering",
   "masaadditions.config.configs_extended2.disable.name.disableBedExplosions": "disableBedExplosions",
   "masaadditions.config.configs_extended2.disable.name.disableBlockAttackedParticles": "disableBlockAttackedParticles",
   "masaadditions.config.configs_extended2.disable.name.disableBossBarRendering": "disableBossBarRendering",
@@ -87,7 +86,6 @@
   "masaadditions.config.configs_extended2.lists.comment.swapAlmostBrokenToolsWhitelist": "Белый список инструментов для твика 'Замена почти сломанных инструментов'.",
   "masaadditions.config.configs_extended2.lists.comment.swapAlmostBrokenToolsBlacklist": "Чёрный список инструментов для твика 'Замена почти сломанных инструментов'.",
 
-  "masaadditions.config.configs_extended2.disable.comment.disableBeaconBeamRendering": "Отключает отображение луча маяка.",
   "masaadditions.config.configs_extended2.disable.comment.disableBedExplosions": "Запрещает использование кроватей в Аду и Крае\n(что приводит к взрыву).",
   "masaadditions.config.configs_extended2.disable.comment.disableBlockAttackedParticles": "Убирает частицы блоков при ударе по ним.",
   "masaadditions.config.configs_extended2.disable.comment.disableBossBarRendering": "Отключает отображение полосы здоровья босса.",
@@ -133,7 +131,6 @@
   "masaadditions.config.hotkeys_extended2.comment.blinkDriveYLevel": "Телепортирует игрока (через /tp) к точке прицела,\nсохраняя текущую высоту Y.\nПортировано из Tweakeroo 1.12.",
   "masaadditions.config.hotkeys_extended2.comment.replacementMode": "При размещении блоков заменяет блок на который смотришь, а не ставит рядом.\nРаботает только с правами оператора или в одиночной игре.",
 
-  "masaadditions.config.configs_extended2.disable.prettyName.disableBeaconBeamRendering": "Отключить луч маяка",
   "masaadditions.config.configs_extended2.disable.prettyName.disableBedExplosions": "Отключить взрывы кровати",
   "masaadditions.config.configs_extended2.disable.prettyName.disableBlockAttackedParticles": "Отключить частицы атаки блока",
   "masaadditions.config.configs_extended2.disable.prettyName.disableBossBarRendering": "Отключить полосу босса",
