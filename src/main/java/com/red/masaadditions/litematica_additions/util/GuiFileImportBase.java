@@ -14,9 +14,6 @@ import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
 import net.minecraft.client.gui.GuiGraphics;
 import fi.dy.masa.malilib.util.StringUtils;
-import net.minecraft.client.input.CharacterEvent;
-import net.minecraft.client.input.KeyEvent;
-import net.minecraft.client.input.MouseButtonEvent;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implements ISelectionListener<WidgetFileBrowserBase.DirectoryEntry> {
@@ -115,34 +112,34 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     }
 
     @Override
-    public boolean onMouseClicked(MouseButtonEvent event, boolean doubled) {
-        if (this.textField.mouseClicked(event, doubled)) {
+    public boolean onMouseClicked(int mouseX, int mouseY, int mouseButton) {
+        if (this.textField.mouseClicked(mouseX, mouseY, mouseButton)) {
             return true;
         }
 
-        return super.onMouseClicked(event, doubled);
+        return super.onMouseClicked(mouseX, mouseY, mouseButton);
     }
 
     @Override
-    public boolean onKeyTyped(KeyEvent event) {
-        if (this.textField.keyPressed(event)) {
+    public boolean onKeyTyped(int keyCode, int scanCode, int modifiers) {
+        if (this.textField.keyPressed(keyCode, scanCode, modifiers)) {
             this.getListWidget().clearSelection();
             return true;
-        } else if (event.key() == KeyCodes.KEY_TAB) {
+        } else if (keyCode == KeyCodes.KEY_TAB) {
             this.textField.setFocused(!this.textField.isFocused());
             return true;
         }
 
-        return super.onKeyTyped(event);
+        return super.onKeyTyped(keyCode, scanCode, modifiers);
     }
 
     @Override
-    public boolean onCharTyped(CharacterEvent event) {
-        if (this.textField.charTyped(event)) {
+    public boolean onCharTyped(char charIn, int modifiers) {
+        if (this.textField.charTyped(charIn, modifiers)) {
             this.getListWidget().clearSelection();
             return true;
         }
 
-        return super.onCharTyped(event);
+        return super.onCharTyped(charIn, modifiers);
     }
 }
