@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemStack;
@@ -27,8 +26,8 @@ public class MixinChunkRendererSchematicVbo {
 
     @Inject(method = "renderBlocksAndOverlay", at = @At("HEAD"), cancellable = true)
     private void renderBlocksAndOverlay(BlockPos pos, ChunkRenderDataSchematic data,
-                                        BufferAllocatorCache buffers, Set<ChunkSectionLayer> layers,
-                                        Set<RenderType> types, PoseStack poseStack, CallbackInfo ci) {
+                                        BufferAllocatorCache buffers, Set<RenderType> types,
+                                        PoseStack poseStack, CallbackInfo ci) {
         LocalPlayer player = Minecraft.getInstance().player;
         ItemStack item = player != null ? player.getMainHandItem() : ItemStack.EMPTY;
         BlockState stateSchematic = this.schematicWorldView.getBlockState(pos);
