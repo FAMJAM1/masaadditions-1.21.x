@@ -1,7 +1,6 @@
 plugins {
-    // no-remap: from 26.1 on, masa's NeoForge ports are compiled straight against
-    // Mojang names, so there is nothing left to remap
-    id 'dev.architectury.loom-no-remap' version '1.17.491'
+    // The plain loom here, not the no-remap fork: 1.21.11 is still obfuscated
+    id 'dev.architectury.loom' version '1.17.491'
     id 'maven-publish'
 }
 
@@ -28,7 +27,8 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    // No mappings: the game ships unobfuscated from 26.1 on
+    // 1.21.11 is still obfuscated, and NeoForge runs on Mojang names
+    mappings loom.officialMojangMappings()
     neoForge "net.neoforged:neoforge:${project.neoforge_version}"
 
     // The mods this one extends. Compile only: the player installs them separately.
@@ -41,7 +41,6 @@ dependencies {
     runtimeOnly "maven.modrinth:forgematica:${project.forgematica_version}"
     runtimeOnly "maven.modrinth:tweakerge:${project.tweakerge_version}"
     runtimeOnly "maven.modrinth:bocchud:${project.bocchud_version}"
-    runtimeOnly "maven.modrinth:foxifiedclasstweaker:${project.foxified_classtweaker_version}"
 }
 
 processResources {
@@ -53,14 +52,14 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    // Minecraft 26.1+ runs on Java 25
-    it.options.release = 25
+    // 1.21.11 runs on Java 21; 26.1 and later moved to 25
+    it.options.release = 21
     // Default is 100, which hides how much of the port is left
     it.options.compilerArgs << '-Xmaxerrs' << '2000'
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }
 

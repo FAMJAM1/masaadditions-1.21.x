@@ -16,42 +16,46 @@ logoFile = "masaadditions-icon.png"
 [[dependencies.masaadditions]]
     modId = "neoforge"
     type = "required"
-    versionRange = "[26.1,26.2)"
+    versionRange = "[21.11,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "minecraft"
     type = "required"
-    versionRange = "[26.1,26.2)"
+    versionRange = "[1.21.11,1.22)"
     ordering = "NONE"
     side = "CLIENT"
 
+# 0.4.5 hooks a call the game no longer makes inside Language.loadFromJson, which
+# NeoForge rerouted, and the game dies on it. The gap holds that release out.
 [[dependencies.masaadditions]]
     modId = "mafglib"
     type = "required"
-    versionRange = "[0.5,)"
+    versionRange = "[0.4,0.4.5),[0.4.6,)"
     ordering = "NONE"
     side = "CLIENT"
 
+# 0.4.3 needs a malilib class that arrived only in MaFgLib 0.4.5, and that release
+# is held out above, so the pair cannot be satisfied. The gap holds it out too.
 [[dependencies.masaadditions]]
     modId = "forgematica"
     type = "optional"
-    versionRange = "[0.5,)"
+    versionRange = "[0.4,0.4.3),[0.4.4,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "tweakerge"
     type = "optional"
-    versionRange = "[0.5,)"
+    versionRange = "[0.4,)"
     ordering = "NONE"
     side = "CLIENT"
 
 [[dependencies.masaadditions]]
     modId = "bocchud"
     type = "optional"
-    versionRange = "[0.5,)"
+    versionRange = "[0.4,)"
     ordering = "NONE"
     side = "CLIENT"
 
@@ -74,6 +78,3 @@ logoFile = "masaadditions-icon.png"
 [[mixins]]
     config = "masaadditions.litematica_additions.mixin.json"
 
-# Access wideners are handled by Foxified ClassTweaker from 26.1 on
-[[foxified.classtweaker]]
-    file = "masaadditions.accesswidener"

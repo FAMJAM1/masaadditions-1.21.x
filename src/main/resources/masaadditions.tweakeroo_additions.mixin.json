@@ -36,8 +36,7 @@
     "MixinRecipeBookWidget",
     "MixinSlimeBlock",
     "MixinStuckArrowsFeatureRenderer",
-    "MixinTitleScreen",
-    "MixinWorldAccess"
+    "MixinTitleScreen"
   ],
   "injectors": {
     "defaultRequire": 1

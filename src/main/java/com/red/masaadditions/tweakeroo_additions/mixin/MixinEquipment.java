@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.Equippable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,8 +37,8 @@ public abstract class MixinEquipment {
             return;
         }
 
-        mc.gameMode.handleContainerInput(user.inventoryMenu.containerId, slotNumber,
-                user.getInventory().getSelectedSlot(), ContainerInput.SWAP, user);
+        mc.gameMode.handleInventoryMouseClick(user.inventoryMenu.containerId, slotNumber,
+                user.getInventory().getSelectedSlot(), ClickType.SWAP, user);
         cir.setReturnValue(InteractionResult.SUCCESS);
     }
 }
