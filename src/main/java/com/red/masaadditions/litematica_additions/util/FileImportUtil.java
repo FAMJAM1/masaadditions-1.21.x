@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 public class FileImportUtil {
     public static void saveDraggedLitematic(Path path) {
-        LitematicaSchematic schematic = LitematicaSchematic.createFromFile(path.getParent(), path.getFileName().toString());
+        LitematicaSchematic schematic = LitematicaSchematic.createFromFile(path.getParent().toFile(), path.getFileName().toString());
 
         if (schematic == null) {
             return;

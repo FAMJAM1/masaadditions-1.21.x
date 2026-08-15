@@ -29,8 +29,8 @@ public class MixinSlimeBlock extends HalfTransparentBlock {
         }
     }
 
-    @Inject(method = "fallOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;causeFallDamage(DFLnet/minecraft/world/damagesource/DamageSource;)Z"), cancellable = true)
-    private void handleFallDamage(Level world, BlockState state, BlockPos pos, Entity entity, double distance, CallbackInfo ci) {
+    @Inject(method = "fallOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;causeFallDamage(FFLnet/minecraft/world/damagesource/DamageSource;)Z"), cancellable = true)
+    private void handleFallDamage(Level world, BlockState state, BlockPos pos, Entity entity, float distance, CallbackInfo ci) {
         if (ConfigsExtended.Disable.DISABLE_SLIME_BLOCK_BOUNCING.getBooleanValue() && entity instanceof Player) {
             super.fallOn(world, state, pos, entity, distance);
             ci.cancel();

@@ -30,7 +30,7 @@ public class MiscUtils {
     public static class ButtonListenerOpenFolder implements IButtonActionListener {
         @Override
         public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
-            Util.getPlatform().openPath(DataManager.getSchematicsBaseDirectory());
+            Util.getPlatform().openFile(DataManager.getSchematicsBaseDirectory());
         }
     }
 
