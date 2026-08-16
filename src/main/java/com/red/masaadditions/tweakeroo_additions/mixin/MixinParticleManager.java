@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelEventHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
@@ -29,9 +30,11 @@ public class MixinParticleManager {
     @Final
     private Minecraft minecraft;
 
+    // Declared as the general level here, so the shadow has to match that and
+    // the cast happens at the one place a client level is actually wanted
     @Shadow
     @Final
-    private ClientLevel level;
+    private Level level;
 
     // From 1.12 Tweakeroo by Masa
     @Inject(method = "levelEvent", at = @At("HEAD"), cancellable = true)
@@ -44,7 +47,7 @@ public class MixinParticleManager {
             BlockState state = Block.stateById(data);
 
             if (!state.isAir()) {
-                MiscUtils.addCustomBlockBreakingParticles(this.minecraft.particleEngine, this.level, this.level.getRandom(), pos, state);
+                MiscUtils.addCustomBlockBreakingParticles(this.minecraft.particleEngine, (ClientLevel) this.level, this.level.getRandom(), pos, state);
                 ci.cancel();
             }
         }
