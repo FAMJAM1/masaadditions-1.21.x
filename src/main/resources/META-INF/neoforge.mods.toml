@@ -37,10 +37,13 @@ logoFile = "masaadditions-icon.png"
     ordering = "NONE"
     side = "CLIENT"
 
+# 0.4.5 ships this line with its metadata URLs left as build placeholders, and
+# the loader rejects the file outright before any mod gets to load. The gap holds
+# it out and leaves room for a fix above.
 [[dependencies.masaadditions]]
     modId = "forgematica"
     type = "optional"
-    versionRange = "[0.4.5,)"
+    versionRange = "[0.4.3,0.4.5),[0.4.6,)"
     ordering = "NONE"
     side = "CLIENT"
 
