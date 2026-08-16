@@ -37,10 +37,14 @@ logoFile = "masaadditions-icon.png"
     ordering = "NONE"
     side = "CLIENT"
 
+# 0.4.3 and 0.4.4 ship this line with one mixin selector left un-remapped -- a
+# lambda inside the level renderer, which no mapping table names. That mixin is
+# required, so those two take the game down at startup on their own. The gap
+# holds them out and leaves room for a later fix.
 [[dependencies.masaadditions]]
     modId = "forgematica"
     type = "optional"
-    versionRange = "[0.4.4,)"
+    versionRange = "[0.4.2,0.4.3),[0.4.5,)"
     ordering = "NONE"
     side = "CLIENT"
 
