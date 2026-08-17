@@ -99,7 +99,7 @@ public abstract class GuiFileImportBase extends GuiSchematicBrowserBase implemen
     public void drawContents(GuiContext context, int mouseX, int mouseY, float partialTicks) {
         super.drawContents(context, mouseX, mouseY, partialTicks);
 
-        this.textField.extractWidgetRenderState(context.getGuiGraphics(), mouseX, mouseY, partialTicks);
+        this.textField.renderWidget(context.getGuiGraphics(), mouseX, mouseY, partialTicks);
     }
 
     @Override

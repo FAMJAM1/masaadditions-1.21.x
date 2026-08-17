@@ -1,7 +1,7 @@
 plugins {
-    // no-remap: from 26.1 on the game ships unobfuscated and masa's mods are
-    // compiled straight against Mojang names, so there is nothing left to remap
-    id 'dev.architectury.loom-no-remap' version '1.17.491'
+    // 1.21.11 still ships obfuscated, so the real plugin is needed: it remaps
+    // this mod on the way out and masa's mods on the way in
+    id 'dev.architectury.loom' version '1.17.491'
     id 'maven-publish'
 }
 
@@ -26,22 +26,23 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    // No mappings: the game ships unobfuscated from 26.1 on. loom-no-remap does
-    // not register the mod* configurations either, so these are plain ones.
-    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    // Mojang names, not yarn: the source came from the 26.1 branch, which is
+    // written in them, and loom remaps masa's mods to match on the way in
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // The mods this one extends. Compile only: the player installs them separately.
-    compileOnly "maven.modrinth:malilib:${project.malilib_version}"
-    compileOnly "maven.modrinth:litematica:${project.litematica_version}"
-    compileOnly "maven.modrinth:tweakeroo:${project.tweakeroo_version}"
-    compileOnly "maven.modrinth:minihud:${project.minihud_version}"
+    modCompileOnly "maven.modrinth:malilib:${project.malilib_version}"
+    modCompileOnly "maven.modrinth:litematica:${project.litematica_version}"
+    modCompileOnly "maven.modrinth:tweakeroo:${project.tweakeroo_version}"
+    modCompileOnly "maven.modrinth:minihud:${project.minihud_version}"
 
-    runtimeOnly "maven.modrinth:malilib:${project.malilib_version}"
-    runtimeOnly "maven.modrinth:litematica:${project.litematica_version}"
-    runtimeOnly "maven.modrinth:tweakeroo:${project.tweakeroo_version}"
-    runtimeOnly "maven.modrinth:minihud:${project.minihud_version}"
+    modRuntimeOnly "maven.modrinth:malilib:${project.malilib_version}"
+    modRuntimeOnly "maven.modrinth:litematica:${project.litematica_version}"
+    modRuntimeOnly "maven.modrinth:tweakeroo:${project.tweakeroo_version}"
+    modRuntimeOnly "maven.modrinth:minihud:${project.minihud_version}"
     // malilib needs the networking and resource loader modules
-    runtimeOnly "maven.modrinth:fabric-api:${project.fabric_api_version}"
+    modRuntimeOnly "maven.modrinth:fabric-api:${project.fabric_api_version}"
 }
 
 processResources {
@@ -53,14 +54,14 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    // Minecraft 26.1+ runs on Java 25
-    it.options.release = 25
+    // Minecraft 1.21.11 runs on Java 21
+    it.options.release = 21
     // Default is 100, which hides how much of the port is left
     it.options.compilerArgs << '-Xmaxerrs' << '2000'
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }
 

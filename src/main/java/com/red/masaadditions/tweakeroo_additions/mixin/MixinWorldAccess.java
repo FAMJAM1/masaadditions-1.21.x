@@ -2,24 +2,26 @@ package com.red.masaadditions.tweakeroo_additions.mixin;
 
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import com.red.masaadditions.tweakeroo_additions.config.FeatureToggleExtended;
-import net.minecraft.client.ClientClockManager;
-import net.minecraft.core.Holder;
-import net.minecraft.world.clock.WorldClock;
-import net.minecraft.world.clock.WorldClocks;
+import net.minecraft.world.timeline.AttributeTrackSampler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-// Sun, moon, fog and the clock item all read a keyframe track sampled at whatever
-// the world clock reports, so the override sits on the client's own clock: the
-// server's copy is untouched and only the overworld clock is redirected.
-@Mixin(ClientClockManager.class)
+import java.util.function.LongSupplier;
+
+/**
+ * Sun, moon, fog and sky colour are all keyframe tracks sampled at whatever the day
+ * time supplier reports, so the override is given to the supplier rather than to any
+ * one of the things that read it.
+ */
+@Mixin(AttributeTrackSampler.class)
 public class MixinWorldAccess {
-    @Inject(method = "getTotalTicks", at = @At("HEAD"), cancellable = true)
-    private void overrideSkyTime(Holder<WorldClock> clock, CallbackInfoReturnable<Long> cir) {
-        if (FeatureToggleExtended.TWEAK_OVERRIDE_SKY_TIME.getBooleanValue() && clock.is(WorldClocks.OVERWORLD)) {
-            cir.setReturnValue((long) ConfigsExtended.Generic.SKY_TIME_OVERRIDE.getIntegerValue());
+    @Redirect(method = "applyTimeBased", at = @At(value = "INVOKE", target = "Ljava/util/function/LongSupplier;getAsLong()J"))
+    private long overrideSkyTime(LongSupplier dayTime) {
+        if (FeatureToggleExtended.TWEAK_OVERRIDE_SKY_TIME.getBooleanValue()) {
+            return ConfigsExtended.Generic.SKY_TIME_OVERRIDE.getIntegerValue();
         }
+
+        return dayTime.getAsLong();
     }
 }

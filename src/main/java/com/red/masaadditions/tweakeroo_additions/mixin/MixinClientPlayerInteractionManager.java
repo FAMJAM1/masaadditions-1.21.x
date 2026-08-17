@@ -23,7 +23,6 @@ import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -72,7 +71,7 @@ public abstract class MixinClientPlayerInteractionManager {
     }
 
     @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;ensureHasSentCarriedItem()V", shift = At.Shift.AFTER), cancellable = true)
-    private void onInteractEntity(Player player, Entity entity, EntityHitResult hitResult, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    private void onInteractEntity(Player player, Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (FeatureToggleExtended.TWEAK_NAME_TAG_PIGLINS.getBooleanValue() && player.getItemInHand(hand).getItem() instanceof NameTagItem) {
             if (!(entity instanceof Piglin piglinEntity)) {
                 cir.setReturnValue(InteractionResult.PASS);
@@ -86,12 +85,15 @@ public abstract class MixinClientPlayerInteractionManager {
         }
     }
 
-    @Inject(method = "lambda$useItemOn$0", at = @At("HEAD"))
+    // The packet is built in a lambda inside useItemOn. Mojang names no lambda,
+    // so on this loader it keeps its intermediary name, the same in development
+    // as in the game itself
+    @Inject(method = "method_41933", at = @At("HEAD"))
     private void resetReplacementModeFlag(CallbackInfoReturnable<Packet<?>> cir) {
         PlacementTweaks.replacementModeUseStack = null;
     }
 
-    @Inject(method = "lambda$useItemOn$0", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "method_41933", at = @At("RETURN"), cancellable = true)
     private void modifyPlacementPacket(MutableObject<InteractionResult> result, LocalPlayer player, InteractionHand hand, BlockHitResult blockHitResult, int sequence, CallbackInfoReturnable<Packet<?>> cir) {
         if (PlacementTweaks.replacementModeUseStack != null) {
             if (!Minecraft.getInstance().isLocalServer()) {

@@ -4,7 +4,7 @@ import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import fi.dy.masa.malilib.gui.GuiBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
-import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.ClickType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,8 +24,8 @@ public abstract class MixinRecipeBookWidget {
         Minecraft client = Minecraft.getInstance();
 
         if (client.gameMode != null && client.player != null) {
-            client.gameMode.handleContainerInput(client.player.containerMenu.containerId, 0, 1,
-                    GuiBase.isAltDown() ? ContainerInput.THROW : ContainerInput.QUICK_MOVE, client.player);
+            client.gameMode.handleInventoryMouseClick(client.player.containerMenu.containerId, 0, 1,
+                    GuiBase.isAltDown() ? ClickType.THROW : ClickType.QUICK_MOVE, client.player);
         }
     }
 }
