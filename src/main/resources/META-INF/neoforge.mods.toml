@@ -23,7 +23,7 @@ logoFile = "masaadditions-icon.png"
 [[dependencies.masaadditions]]
     modId = "minecraft"
     type = "required"
-    versionRange = "[1.21.11,1.22)"
+    versionRange = "[1.21.11,1.21.12)"
     ordering = "NONE"
     side = "CLIENT"
 
