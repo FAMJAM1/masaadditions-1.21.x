@@ -3,7 +3,7 @@ package com.red.masaadditions.tweakeroo_additions.tweaks;
 import com.google.common.collect.Sets;
 import net.minecraft.world.item.Item;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class InventoryTweaks {
     private static void parseList(List<String> list, Set<Item> set) {
         set.clear();
         for (String blockStr : list) {
-            Identifier id = Identifier.tryParse(blockStr);
+            ResourceLocation id = ResourceLocation.tryParse(blockStr);
             if (id == null) {
                 continue;
             }

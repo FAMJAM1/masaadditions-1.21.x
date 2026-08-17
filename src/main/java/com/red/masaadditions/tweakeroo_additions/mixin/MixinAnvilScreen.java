@@ -9,14 +9,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(AnvilScreen.class)
 public abstract class MixinAnvilScreen extends ItemCombinerScreen<AnvilMenu> {
-    public MixinAnvilScreen(AnvilMenu handler, Inventory playerInventory, Component title, Identifier texture) {
+    public MixinAnvilScreen(AnvilMenu handler, Inventory playerInventory, Component title, ResourceLocation texture) {
         super(handler, playerInventory, title, texture);
     }
 

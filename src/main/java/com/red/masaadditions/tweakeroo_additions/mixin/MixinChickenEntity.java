@@ -3,7 +3,7 @@ package com.red.masaadditions.tweakeroo_additions.mixin;
 import com.red.masaadditions.tweakeroo_additions.config.ConfigsExtended;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.chicken.Chicken;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

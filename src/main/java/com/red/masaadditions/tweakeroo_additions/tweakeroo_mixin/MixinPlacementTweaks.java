@@ -51,7 +51,7 @@ public class MixinPlacementTweaks {
         Block block = world.getBlockState(hitResult.getBlockPos()).getBlock();
         Item heldItem = player.getItemInHand(hand).getItem();
 
-        if (MiscUtils.handleUseSnowLayer(block, player) || MiscUtils.handleUseDragonEgg(block, player) || MiscUtils.handleUseBed(block, world, hitResult.getBlockPos()) || MiscUtils.handleUseTools(block, heldItem)) {
+        if (MiscUtils.handleUseSnowLayer(block, player) || MiscUtils.handleUseDragonEgg(block, player) || MiscUtils.handleUseBed(block, world) || MiscUtils.handleUseTools(block, heldItem)) {
             cir.setReturnValue(InteractionResult.PASS);
         }
     }
