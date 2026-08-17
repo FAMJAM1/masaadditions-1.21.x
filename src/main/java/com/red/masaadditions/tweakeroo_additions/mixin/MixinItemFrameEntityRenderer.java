@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 // further along and are left alone.
 @Mixin(value = ItemFrameRenderer.class)
 public class MixinItemFrameEntityRenderer {
-    @Redirect(method = "submit(Lnet/minecraft/client/renderer/entity/state/ItemFrameRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
+    @Redirect(method = "render(Lnet/minecraft/client/renderer/entity/state/ItemFrameRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At(value = "FIELD", opcode = org.objectweb.asm.Opcodes.GETFIELD,
                     target = "Lnet/minecraft/client/renderer/entity/state/ItemFrameRenderState;isInvisible:Z",
                     ordinal = 0))

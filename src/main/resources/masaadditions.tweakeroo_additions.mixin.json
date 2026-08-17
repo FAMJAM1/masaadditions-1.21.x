@@ -28,6 +28,7 @@
     "MixinItemPlacementContextAccessor",
     "MixinMessageHandler",
     "MixinMinecraftClient",
+    "MixinParticleEngine",
     "MixinParticleManager",
     "MixinPendingUpdateAccessor",
     "MixinPendingUpdateManagerAccessor",

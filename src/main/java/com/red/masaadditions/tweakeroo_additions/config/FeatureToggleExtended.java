@@ -245,23 +245,19 @@ public enum FeatureToggleExtended implements IHotkeyTogglable, IConfigNotifiable
         }
     }
 
-    // malilib tracks unsaved changes itself now, so every config has to answer for its own
-    @Override
+    // malilib does not track unsaved changes on this line, so these stand on their own
     public boolean isDirty() {
         return this.lastSavedValueBoolean != this.valueBoolean;
     }
 
-    @Override
     public void markDirty() {
         this.lastSavedValueBoolean = !this.valueBoolean;
     }
 
-    @Override
     public void markClean() {
         this.lastSavedValueBoolean = this.valueBoolean;
     }
 
-    @Override
     public void checkIfClean() {
         if (this.isDirty()) {
             this.onValueChanged();
