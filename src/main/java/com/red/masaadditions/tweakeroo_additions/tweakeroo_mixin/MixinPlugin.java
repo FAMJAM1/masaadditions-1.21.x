@@ -16,10 +16,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.endsWith(".MixinExplosionCarpet")) {
-            return FabricLoader.getInstance().isModLoaded("carpet");
-        }
-
         return hasTweakeroo();
     }
 
