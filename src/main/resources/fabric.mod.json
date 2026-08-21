@@ -33,17 +33,17 @@
   ],
   "accessWidener": "masaadditions.accesswidener",
   "depends": {
-    "minecraft": "1.21.5",
-    "malilib": ">=0.24.3- <0.25.0-"
+    "minecraft": "1.21.4",
+    "malilib": ">=0.23.5- <0.24.0-"
   },
   "suggests": {
-    "tweakeroo": ">=0.24.3",
-    "litematica": ">=0.22.5",
-    "minihud": ">=0.35.4"
+    "tweakeroo": ">=0.23.6",
+    "litematica": ">=0.21.7",
+    "minihud": ">=0.34.8"
   },
   "breaks": {
-    "tweakeroo": "<0.24.3",
-    "litematica": "<0.22.5",
-    "minihud": "<0.35.4"
+    "tweakeroo": "<0.23.6",
+    "litematica": "<0.21.7",
+    "minihud": "<0.34.8"
   }
 }

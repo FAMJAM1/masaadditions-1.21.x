@@ -38,7 +38,7 @@ public abstract class MixinEquipment {
         }
 
         mc.gameMode.handleInventoryMouseClick(user.inventoryMenu.containerId, slotNumber,
-                user.getInventory().getSelectedSlot(), ClickType.SWAP, user);
+                user.getInventory().selected, ClickType.SWAP, user);
         cir.setReturnValue(InteractionResult.SUCCESS);
     }
 }

@@ -26,8 +26,8 @@ public class MixinChunkRendererSchematicVbo {
 
     @Inject(method = "renderBlocksAndOverlay", at = @At("HEAD"), cancellable = true)
     private void renderBlocksAndOverlay(BlockPos pos, ChunkRenderDataSchematic data,
-                                        BufferAllocatorCache buffers, Set<RenderType> types,
-                                        PoseStack poseStack, CallbackInfo ci) {
+                                        BufferAllocatorCache buffers, Set<BlockEntity> blockEntities,
+                                        Set<RenderType> types, PoseStack poseStack, CallbackInfo ci) {
         LocalPlayer player = Minecraft.getInstance().player;
         ItemStack item = player != null ? player.getMainHandItem() : ItemStack.EMPTY;
         BlockState stateSchematic = this.schematicWorldView.getBlockState(pos);
